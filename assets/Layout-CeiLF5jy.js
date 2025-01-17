@@ -1,0 +1,1 @@
+import{j as s,a as e,O as t}from"./index-DOpGfBWX.js";function r(){return s.jsxs(s.Fragment,{children:[s.jsx("header",{}),s.jsxs("main",{children:[s.jsx("p",{children:"Main Content"}),s.jsx(e.Suspense,{children:s.jsx(t,{})})]})]})}export{r as default};
