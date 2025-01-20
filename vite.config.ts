@@ -20,6 +20,6 @@ export default defineConfig({
   define: {
     'process.env': {},
   },
-  base: '/journey',
+  base: '/your-library',
   publicDir: 'public',
 });

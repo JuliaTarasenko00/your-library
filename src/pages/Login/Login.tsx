@@ -7,6 +7,10 @@ import { EmailInput } from '../../components/ui/inputs/EmailInput';
 import { PasswordInput } from '../../components/ui/inputs/PasswordInput';
 import { ValidateLoginType, validateSchemaLogin } from './validateSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useFetchLogin } from './useFetchLogin';
+import { useAuth } from '../../helpers/context/authContext/useAuth';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const defaultValues: ValidateLoginType = {
   email: '',
@@ -14,6 +18,10 @@ const defaultValues: ValidateLoginType = {
 };
 
 export default function Login() {
+  const navigate = useNavigate();
+  const { mutate } = useFetchLogin();
+  const { token, setToken } = useAuth();
+
   const {
     control,
     handleSubmit,
@@ -25,8 +33,19 @@ export default function Login() {
   });
 
   const submitForm = (values: ValidateLoginType) => {
-    console.log(values);
+    mutate(values, {
+      onSuccess: (data) => {
+        setToken(data.token);
+      },
+      onError: (error) => {
+        console.error('Error signing in', error);
+      },
+    });
   };
+
+  useEffect(() => {
+    token && navigate(routes.main);
+  }, [token]);
 
   return (
     <AuthLayout>

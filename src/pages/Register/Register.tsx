@@ -8,14 +8,22 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { EmailInput } from '../../components/ui/inputs/EmailInput';
 import { PasswordInput } from '../../components/ui/inputs/PasswordInput';
 import { TextInput } from '../../components/ui/inputs/TextInput';
+import { useFetchAuthUser } from './useFetchAuthUser';
+import { useAuth } from '../../helpers/context/authContext/useAuth';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const defaultValues: TypeValidateRegister = {
-  login: '',
+  name: '',
   email: '',
   password: '',
 };
 
 export default function Register() {
+  const navigate = useNavigate();
+  const { mutate } = useFetchAuthUser();
+  const { token, setToken } = useAuth();
+
   const {
     control,
     handleSubmit,
@@ -27,8 +35,19 @@ export default function Register() {
   });
 
   const onSubmitForm = (values: TypeValidateRegister) => {
-    console.log(values);
+    mutate(values, {
+      onSuccess: (data) => {
+        setToken(data.token);
+      },
+      onError: (error) => {
+        console.error('Error signing up', error);
+      },
+    });
   };
+
+  useEffect(() => {
+    token && navigate(routes.main);
+  }, [token]);
 
   return (
     <AuthLayout>
@@ -38,12 +57,12 @@ export default function Register() {
       >
         <div className="flex w-full flex-col items-center justify-center gap-[14px]">
           <Controller
-            name="login"
+            name="name"
             control={control}
             render={({ field }) => (
               <TextInput
                 {...field}
-                errorMessage={errors.login?.message}
+                errorMessage={errors.name?.message}
                 label={'Name:'}
               />
             )}

@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { emailRegexp } from '../Login/validateSchema';
 
 export const validateRegisterSchema = Yup.object().shape({
-  login: Yup.string().min(3).required(),
+  name: Yup.string().min(3).required(),
   email: Yup.string()
     .matches(emailRegexp, 'Enter a valid Email*')
     .required('Enter a valid Email*'),
