@@ -12,6 +12,9 @@ import { useFetchAuthUser } from './useFetchAuthUser';
 import { useAuth } from '../../helpers/context/authContext/useAuth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { toastErrorStyle } from '../../components/ui/toastErrorStyle';
+import { ComponentLoader } from '../../components/ui/loader/ComponentLoader';
 
 const defaultValues: TypeValidateRegister = {
   name: '',
@@ -21,7 +24,7 @@ const defaultValues: TypeValidateRegister = {
 
 export default function Register() {
   const navigate = useNavigate();
-  const { mutate } = useFetchAuthUser();
+  const { mutate, isPending } = useFetchAuthUser();
   const { token, setToken } = useAuth();
 
   const {
@@ -40,7 +43,9 @@ export default function Register() {
         setToken(data.token);
       },
       onError: (error) => {
-        console.error('Error signing up', error);
+        toast.error(error.message, {
+          style: toastErrorStyle,
+        });
       },
     });
   };
@@ -84,9 +89,17 @@ export default function Register() {
               />
             )}
           />
-        </div>{' '}
+        </div>
         <div className="mt-[82px] flex items-center gap-[14px] md:gap-[20px]">
-          <AuthButton>Registration</AuthButton>
+          <AuthButton>
+            {isPending ? (
+              <div className="flex items-center gap-[14px]">
+                <ComponentLoader /> Registration
+              </div>
+            ) : (
+              'Registration'
+            )}
+          </AuthButton>
           <AuthLink to={routes.login}>Already have an account?</AuthLink>{' '}
         </div>
       </form>

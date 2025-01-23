@@ -3,6 +3,8 @@ import { NavLink, Outlet } from 'react-router-dom';
 import logo from '../../assets/img/logo.png';
 import { routes } from '../../helpers/path';
 import { useUserInformation } from '../../helpers/context/userInformation/useUserInformation';
+import { Aside } from '../Aside/Aside';
+import { MainLoader } from '../ui/loader/MainLoader';
 
 export default function Layout() {
   const { data } = useUserInformation();
@@ -48,18 +50,21 @@ export default function Layout() {
             </div>
             <button
               type="button"
-              className="rounded-[30px] border-[1px] border-[#F9F9F933] px-[28px] py-[12px] text-[16px] font-bold text-[#F9F9F9]"
+              className="transition-custom rounded-[30px] border-[1px] border-[#F9F9F933] px-[28px] py-[12px] text-[16px] font-bold text-[#F9F9F9] hover:border-[#F9F9F9] hover:bg-[#F9F9F9] hover:text-[#1F1F1F] focus:border-[#F9F9F9] focus:bg-[#F9F9F9] focus:text-[#1F1F1F]"
             >
               Log out
             </button>
           </div>
         </div>
       </header>
-      <main>
-        <Suspense>
-          <Outlet />
-        </Suspense>
-      </main>
+      <div className="container grid grid-cols-[1fr_2.6fr] gap-[16px] pb-[27px]">
+        <Aside />
+        <main className="rounded-[30px] bg-[#1F1F1F] p-[40px]">
+          <Suspense fallback={<MainLoader />}>
+            <Outlet />
+          </Suspense>
+        </main>
+      </div>
     </>
   );
 }

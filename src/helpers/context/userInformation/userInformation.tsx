@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useEffect } from 'react';
 import { useAuth } from '../authContext/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { getCurrent } from '../../../api/auth';
@@ -17,13 +17,19 @@ export const UserInformationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { token } = useAuth();
+  const { token, setToken } = useAuth();
 
-  const { data } = useQuery<Auth>({
+  const { data, error } = useQuery<Auth>({
     queryKey: ['get/userInformation'],
     queryFn: getCurrent,
     enabled: !!token,
   });
+
+  useEffect(() => {
+    if (error && error.response?.status === 401) {
+      setToken('');
+    }
+  }, [error, setToken]);
 
   return (
     <UserInformationContext.Provider value={{ data }}>

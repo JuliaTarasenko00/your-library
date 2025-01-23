@@ -20,3 +20,7 @@ export const getCurrent = async () => {
 
   return data;
 };
+
+export const signout = async () => {
+  await $instants.post(`${path}/current`);
+};

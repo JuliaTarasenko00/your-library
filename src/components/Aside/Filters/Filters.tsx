@@ -1,0 +1,111 @@
+import { Controller, useForm } from 'react-hook-form';
+import { TextInput } from '../../ui/inputs/TextInput';
+import { numberStyle, submitButton, textStyle, wrapper } from './filterStyle';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import book from '../../../assets/img/book.webp';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../../helpers/path';
+
+const defaultValues = {
+  title: '',
+  author: '',
+};
+
+export const Filters = () => {
+  const navigate = useNavigate();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<typeof defaultValues>({
+    defaultValues,
+    mode: 'onChange',
+  });
+
+  const onSubmitForm = (values: typeof defaultValues) => {
+    console.log('values: ', values);
+  };
+
+  return (
+    <>
+      <h2 className="mb-[8px] pt-[20px] text-[14px] font-medium text-[#F9F9F9]">
+        Filters:
+      </h2>
+      <form onSubmit={handleSubmit(onSubmitForm)} className="">
+        <div className="flex flex-col gap-[8px]">
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                errorMessage={errors.title?.message}
+                label="Book title:"
+              />
+            )}
+          />
+          <Controller
+            name="author"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                errorMessage={errors.title?.message}
+                label="The author:"
+              />
+            )}
+          />
+        </div>
+        <button type="submit" className={submitButton}>
+          To apply
+        </button>
+      </form>
+
+      <div className="mt-[20px] rounded-[12px] bg-[#262626] p-[20px]">
+        <h3 className="mb-[40px] text-[20px] font-bold text-[#F9F9F9]">
+          Start your workout
+        </h3>
+        <div className="flex flex-col gap-[20px]">
+          <div className={wrapper}>
+            <p className={numberStyle}>
+              <span>1</span>
+            </p>
+            <p className={textStyle}>
+              <span className="text-[#F9F9F9]">Create a personal library:</span>{' '}
+              add the books you intend to read to it.
+            </p>
+          </div>
+          <div className={wrapper}>
+            <p className={numberStyle}>
+              <span>2</span>
+            </p>
+            <p className={textStyle}>
+              <span className="text-[#F9F9F9]">Create your first workout:</span>{' '}
+              define a goal, choose a period, start training.
+            </p>
+          </div>
+        </div>
+        <div className="mt-[20px] flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => navigate(routes.library)}
+            className="text-[14px] leading-[18px] text-[#686868] underline"
+          >
+            My library
+          </button>
+          <button type="button" onClick={() => navigate(routes.library)}>
+            <FaArrowRightLong />
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-[20px] flex items-center gap-[14px] rounded-[12px] bg-[#262626] px-[20px] py-[15px]">
+        <img src={book} alt="book" />
+        <p className="text-[14px] leading-[18px] text-[#686868]">
+          "Books are <span className="text-[#F9F9F9]">windows</span> to the
+          world, and reading is a journey into the unknown."
+        </p>
+      </div>
+    </>
+  );
+};

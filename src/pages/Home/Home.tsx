@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <section className="container">
-      <p>Home</p>
+    <section>
+      <p>Recommended</p>
     </section>
   );
 }

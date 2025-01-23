@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthLayout } from '../../components/AuthLayout/AuthLayout';
 import { AuthButton } from '../../components/ui/AuthButton';
 import { AuthLink } from '../../components/ui/AuthLink';
@@ -6,11 +9,11 @@ import { routes } from '../../helpers/path';
 import { EmailInput } from '../../components/ui/inputs/EmailInput';
 import { PasswordInput } from '../../components/ui/inputs/PasswordInput';
 import { ValidateLoginType, validateSchemaLogin } from './validateSchema';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useFetchLogin } from './useFetchLogin';
 import { useAuth } from '../../helpers/context/authContext/useAuth';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { toastErrorStyle } from '../../components/ui/toastErrorStyle';
+import { ComponentLoader } from '../../components/ui/loader/ComponentLoader';
 
 const defaultValues: ValidateLoginType = {
   email: '',
@@ -19,7 +22,7 @@ const defaultValues: ValidateLoginType = {
 
 export default function Login() {
   const navigate = useNavigate();
-  const { mutate } = useFetchLogin();
+  const { mutate, isPending } = useFetchLogin();
   const { token, setToken } = useAuth();
 
   const {
@@ -38,7 +41,9 @@ export default function Login() {
         setToken(data.token);
       },
       onError: (error) => {
-        console.error('Error signing in', error);
+        toast.error(error.message, {
+          style: toastErrorStyle,
+        });
       },
     });
   };
@@ -73,7 +78,15 @@ export default function Login() {
           />
         </div>
         <div className="mt-[72px] flex items-center gap-[14px] md:mt-[146px] md:gap-[20px]">
-          <AuthButton>Login In</AuthButton>
+          <AuthButton>
+            {isPending ? (
+              <div className="flex items-center gap-[14px]">
+                <ComponentLoader /> Login In
+              </div>
+            ) : (
+              'Login In'
+            )}
+          </AuthButton>
           <AuthLink to={routes.register}>Don’t have an account? </AuthLink>
         </div>
       </form>

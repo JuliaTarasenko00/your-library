@@ -3,10 +3,10 @@ import { signin } from '../../api/auth';
 import { SignIn } from '../../types/auth';
 
 export const useFetchLogin = () => {
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ['fetch/signin'],
     mutationFn: (body: SignIn) => signin(body),
   });
 
-  return { mutate };
+  return { mutate, isPending };
 };
