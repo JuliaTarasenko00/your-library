@@ -26,7 +26,7 @@ export const UserInformationProvider = ({
   });
 
   useEffect(() => {
-    if (error && error.response?.status === 401) {
+    if ((error as any)?.response?.status === 401) {
       setToken('');
     }
   }, [error, setToken]);
