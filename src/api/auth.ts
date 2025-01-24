@@ -21,6 +21,7 @@ export const getCurrent = async () => {
   return data;
 };
 
-export const signout = async () => {
-  await $instants.post(`${path}/current`);
+export const logout = async () => {
+  await $instants.post(`${path}/signout`);
+  return;
 };

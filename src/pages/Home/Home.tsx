@@ -1,7 +1,5 @@
+import { RecommendBooks } from '../../components/RecommendBooks/RecommnedBooks';
+
 export default function Home() {
-  return (
-    <section>
-      <p>Recommended</p>
-    </section>
-  );
+  return <RecommendBooks />;
 }

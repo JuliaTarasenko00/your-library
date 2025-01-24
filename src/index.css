@@ -53,8 +53,8 @@ svg {
 }
 
 @layer {
-  .container {
-    @apply mx-[auto] my-[0] w-[1280px] px-[20px] md:px-[32px];
+  .container-custom {
+    @apply mx-[auto] my-[0] max-w-[1280px] px-[20px] md:px-[32px];
   }
   .transition-custom {
     @apply transition-colors duration-[400ms];

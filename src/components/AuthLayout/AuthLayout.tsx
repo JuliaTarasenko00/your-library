@@ -3,7 +3,7 @@ import logo from '../../assets/img/logo.png';
 
 export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <section className="container grid grid-rows-[2fr_1.5fr] justify-center gap-[10px] py-[32px] md:grid-rows-none md:justify-normal xl:h-[100%] xl:grid-cols-2 xl:gap-[16px]">
+    <section className="container-custom grid grid-rows-[2fr_1.5fr] justify-center gap-[10px] py-[32px] md:grid-rows-none md:justify-normal xl:h-[100%] xl:grid-cols-2 xl:gap-[16px]">
       <div className="w-full rounded-[30px] bg-[#1F1F1F] p-[20px] md:p-[64px]">
         <div className="flex items-center gap-[4px]">
           <img src={logo} alt="logo" />

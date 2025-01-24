@@ -1,6 +1,6 @@
 export default function Library() {
   return (
-    <section className="container">
+    <section className="container-custom">
       <p>Library</p>
     </section>
   );

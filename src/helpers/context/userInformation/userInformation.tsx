@@ -3,6 +3,7 @@ import { useAuth } from '../authContext/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { getCurrent } from '../../../api/auth';
 import { Auth } from '../../../types/auth';
+import { MainLoader } from '../../../components/ui/loader/MainLoader';
 
 export type TUserInformationContext = {
   data: Auth | undefined;
@@ -19,7 +20,7 @@ export const UserInformationProvider = ({
 }) => {
   const { token, setToken } = useAuth();
 
-  const { data, error } = useQuery<Auth>({
+  const { data, error, isLoading } = useQuery<Auth>({
     queryKey: ['get/userInformation'],
     queryFn: getCurrent,
     enabled: !!token,
@@ -32,8 +33,14 @@ export const UserInformationProvider = ({
   }, [error, setToken]);
 
   return (
-    <UserInformationContext.Provider value={{ data }}>
-      {children}
-    </UserInformationContext.Provider>
+    <>
+      {isLoading ? (
+        <MainLoader />
+      ) : (
+        <UserInformationContext.Provider value={{ data }}>
+          {children}
+        </UserInformationContext.Provider>
+      )}
+    </>
   );
 };

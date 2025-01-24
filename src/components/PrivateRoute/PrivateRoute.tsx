@@ -9,7 +9,7 @@ interface PrivateRouteProps {
 
 export const PrivateRoute: FC<PrivateRouteProps> = ({
   children,
-  redirectTo = '/login',
+  redirectTo,
 }) => {
   const { token } = useAuth();
 
