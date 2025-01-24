@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { routes } from '../helpers/path';
 
 export const $instants = axios.create({
   baseURL: 'https://readjourney.b.goit.study/api',
