@@ -10,6 +10,6 @@ export type resultRecommendBook = {
   title: string;
   author: string;
   imageUrl: string;
-  totalPage: number;
+  totalPages: number;
   recommend: boolean;
 };

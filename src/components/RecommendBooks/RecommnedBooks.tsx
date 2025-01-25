@@ -65,7 +65,7 @@ export const RecommendBooks = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <ul className="flex flex-wrap justify-center gap-x-[20px] gap-y-[27px]">
+          <ul className="grid grid-cols-5 justify-center gap-x-[20px] gap-y-[27px]">
             {data?.results.map(({ _id, imageUrl, title, author }) => {
               const newTitle = `${title.slice(0, 22)}${title.length >= 22 ? '...' : ''}`;
               return (
@@ -96,9 +96,11 @@ export const RecommendBooks = () => {
           </ul>
         )}
       </section>
-      {bookDetails && open && (
-        <BookDetails book={bookDetails} closeModal={onToggleModal} />
-      )}
+      <BookDetails
+        book={bookDetails as resultRecommendBook}
+        closeModal={onToggleModal}
+        isOpen={open}
+      />
     </>
   );
 };
