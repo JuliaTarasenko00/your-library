@@ -18,8 +18,8 @@ $instants.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem('refreshToken');
-        const response = await $instants.post('/users/current/refresh', {
-          refreshToken,
+        const response = await $instants.get('/users/current/refresh', {
+          params: { refreshToken },
         });
         const { token: accessToken, refreshToken: newRefreshToken } =
           response.data;
@@ -30,8 +30,8 @@ $instants.interceptors.response.use(
         return $instants(originalRequest);
       } catch (refreshError) {
         console.error('Token refresh failed:', refreshError);
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
+        localStorage.setItem('token', '');
+        localStorage.setItem('refreshToken', '');
         return Promise.reject(refreshError);
       }
     }

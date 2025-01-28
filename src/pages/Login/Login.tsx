@@ -9,11 +9,11 @@ import { routes } from '../../helpers/path';
 import { EmailInput } from '../../components/ui/inputs/EmailInput';
 import { PasswordInput } from '../../components/ui/inputs/PasswordInput';
 import { ValidateLoginType, validateSchemaLogin } from './validateSchema';
-import { useFetchLogin } from './useFetchLogin';
 import { useAuth } from '../../helpers/context/authContext/useAuth';
 import { toast } from 'sonner';
 import { toastErrorStyle } from '../../components/ui/toastErrorStyle';
 import { ComponentLoader } from '../../components/ui/loader/ComponentLoader';
+import { useFetchLogin } from './useFetchLogin';
 
 const defaultValues: ValidateLoginType = {
   email: '',

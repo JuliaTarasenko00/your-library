@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,8 +14,11 @@
 
 body {
   margin: 0;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Open Sans', serif;
   background-color: #141414;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: 'wdth' 100;
   color: #f9f9f9;
 }
 
@@ -54,10 +57,10 @@ svg {
 
 @layer {
   .container-custom {
-    @apply mx-[auto] my-[0] max-w-[1280px] px-[20px] md:px-[32px];
+    @apply mx-[auto] my-[0] max-w-[375px] px-[20px] md:max-w-[768px] md:px-[32px] lg:max-w-[1280px];
   }
   .transition-custom {
-    @apply transition-colors duration-[400ms];
+    @apply transition-all duration-[400ms];
   }
 }
 

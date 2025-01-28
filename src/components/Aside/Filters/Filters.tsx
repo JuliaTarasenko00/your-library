@@ -5,6 +5,7 @@ import { FaArrowRightLong } from 'react-icons/fa6';
 import book from '../../../assets/img/book.webp';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../helpers/path';
+import { useFilterBook } from '../../../helpers/context/filterByAuthorTile/useFilterBook';
 
 const defaultValues = {
   title: '',
@@ -12,57 +13,60 @@ const defaultValues = {
 };
 
 export const Filters = () => {
+  const { setValue } = useFilterBook();
   const navigate = useNavigate();
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<typeof defaultValues>({
     defaultValues,
     mode: 'onChange',
   });
 
   const onSubmitForm = (values: typeof defaultValues) => {
-    console.log('values: ', values);
+    setValue({ title: values.title, author: values.author });
   };
 
   return (
     <>
-      <h2 className="mb-[8px] pt-[20px] text-[14px] font-medium text-[#F9F9F9]">
-        Filters:
-      </h2>
-      <form onSubmit={handleSubmit(onSubmitForm)} className="">
-        <div className="flex flex-col gap-[8px]">
-          <Controller
-            name="title"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                errorMessage={errors.title?.message}
-                label="Book title:"
-              />
-            )}
-          />
-          <Controller
-            name="author"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                errorMessage={errors.title?.message}
-                label="The author:"
-              />
-            )}
-          />
-        </div>
-        <button type="submit" className={submitButton}>
-          To apply
-        </button>
-      </form>
+      <div>
+        <h2 className="mb-[8px] text-[10px] font-medium text-[#F9F9F9] md:text-[14px]">
+          Filters:
+        </h2>
+        <form onSubmit={handleSubmit(onSubmitForm)}>
+          <div className="flex flex-col gap-[8px]">
+            <Controller
+              name="title"
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  errorMessage={errors.title?.message}
+                  label="Book title:"
+                />
+              )}
+            />
+            <Controller
+              name="author"
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  errorMessage={errors.title?.message}
+                  label="The author:"
+                />
+              )}
+            />
+          </div>
+          <button type="submit" className={submitButton} disabled={!isDirty}>
+            To apply
+          </button>
+        </form>
+      </div>
 
-      <div className="mt-[20px] rounded-[12px] bg-[#262626] p-[20px]">
-        <h3 className="mb-[40px] text-[20px] font-bold text-[#F9F9F9]">
+      <div className="rounded-[12px] bg-[#262626] p-[20px]">
+        <h3 className="mb-[40px] text-[18px] font-bold text-[#F9F9F9] md:text-[20px]">
           Start your workout
         </h3>
         <div className="flex flex-col gap-[20px]">
@@ -99,7 +103,7 @@ export const Filters = () => {
         </div>
       </div>
 
-      <div className="mt-[20px] flex items-center gap-[14px] rounded-[12px] bg-[#262626] px-[20px] py-[15px]">
+      <div className="hidden items-center gap-[14px] rounded-[12px] bg-[#262626] px-[20px] py-[15px] lg:flex">
         <img src={book} alt="book" />
         <p className="text-[14px] leading-[18px] text-[#686868]">
           "Books are <span className="text-[#F9F9F9]">windows</span> to the
