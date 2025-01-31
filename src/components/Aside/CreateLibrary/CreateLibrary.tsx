@@ -18,7 +18,6 @@ export const CreateLibrary = () => {
   const {
     handleSubmit,
     control,
-    reset,
     formState: { errors },
   } = useForm({
     defaultValues,
