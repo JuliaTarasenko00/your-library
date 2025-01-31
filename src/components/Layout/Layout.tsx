@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import logo from '../../assets/img/logo.png';
 import { useUserInformation } from '../../helpers/context/userInformation/useUserInformation';
-import { Aside } from '../Aside/Aside';
 import { MainLoader } from '../ui/loader/MainLoader';
 import { TabletMenu } from './components/TabletMenu';
 import { MobileMenu } from './components/MobileMenu';
@@ -22,14 +21,11 @@ export default function Layout() {
           <TabletMenu data={data} />
         </div>
       </header>
-      <div className="container-custom grid gap-[16px] pb-[27px] lg:grid-cols-[1fr_2.6fr]">
-        <Aside />
-        <main className="min-h-[398px] rounded-[30px] bg-[#1F1F1F] px-[20px] py-[40px] md:min-h-[681px] md:p-[40px] lg:min-h-full">
-          <Suspense fallback={<MainLoader />}>
-            <Outlet />
-          </Suspense>
-        </main>
-      </div>
+      <main>
+        <Suspense fallback={<MainLoader />}>
+          <Outlet />
+        </Suspense>
+      </main>
     </>
   );
 }

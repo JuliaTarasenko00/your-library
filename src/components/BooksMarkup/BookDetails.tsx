@@ -35,9 +35,9 @@ export const BookDetails: FC<BookDetailsProps> = ({
           </p>
           <button
             type="button"
-            className="rounded-[30px] border-[1px] border-[#F9F9F933] px-[24px] py-[12px] text-[14px] font-bold leading-[18px] text-[#F9F9F9] md:px-[28px] md:py-[14px] md:text-[16px]"
+            className="transition-custom rounded-[30px] border-[1px] border-[#F9F9F933] px-[24px] py-[12px] text-[14px] font-bold leading-[18px] text-[#F9F9F9] hover:border-[#F9F9F9] hover:bg-[#F9F9F9] hover:text-[#1F1F1F] focus:border-[#F9F9F9] focus:bg-[#F9F9F9] focus:text-[#1F1F1F] md:px-[28px] md:py-[14px] md:text-[16px]"
           >
-            Start reading
+            Add to library
           </button>
         </div>
       )}

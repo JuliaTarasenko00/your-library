@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { TextInput } from '../../ui/inputs/TextInput';
 import { numberStyle, submitButton, textStyle, wrapper } from './filterStyle';
@@ -7,24 +8,38 @@ import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../helpers/path';
 import { useFilterBook } from '../../../helpers/context/filterByAuthorTile/useFilterBook';
 
+interface FilterProps {
+  setCurrentPage: any;
+  currentPage: number;
+}
+
 const defaultValues = {
   title: '',
   author: '',
 };
 
-export const Filters = () => {
+export const Filters: FC<FilterProps> = ({ setCurrentPage, currentPage }) => {
   const { setValue } = useFilterBook();
   const navigate = useNavigate();
   const {
     control,
+    reset,
     handleSubmit,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, isSubmitted },
   } = useForm<typeof defaultValues>({
     defaultValues,
     mode: 'onChange',
   });
 
+  const onFirstPage = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+      return;
+    }
+  };
+
   const onSubmitForm = (values: typeof defaultValues) => {
+    onFirstPage();
     setValue({ title: values.title, author: values.author });
   };
 
@@ -59,9 +74,24 @@ export const Filters = () => {
               )}
             />
           </div>
-          <button type="submit" className={submitButton} disabled={!isDirty}>
-            To apply
-          </button>
+          <div className="mt-[20px] flex items-center justify-between md:mt-[32px] lg:mt-[20px]">
+            <button type="submit" className={submitButton} disabled={!isDirty}>
+              To apply
+            </button>
+            {isSubmitted && (
+              <button
+                type="button"
+                className={submitButton}
+                onClick={() => {
+                  reset();
+                  setValue({ title: '', author: '' });
+                  onFirstPage();
+                }}
+              >
+                To clear
+              </button>
+            )}
+          </div>
         </form>
       </div>
 

@@ -25,7 +25,7 @@ const defaultValues: TypeValidateRegister = {
 export default function Register() {
   const navigate = useNavigate();
   const { mutate, isPending } = useFetchAuthUser();
-  const { token, setToken, setRefreshToken } = useAuth();
+  const { token, setToken } = useAuth();
 
   const {
     control,
@@ -41,7 +41,6 @@ export default function Register() {
     mutate(values, {
       onSuccess: (data) => {
         setToken(data.token);
-        setRefreshToken(data.refreshToken);
       },
       onError: (error) => {
         toast.error(error.message, {

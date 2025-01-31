@@ -3,6 +3,9 @@ import { BooksMarkup } from '../../components/BooksMarkup/BooksMarkup';
 import { useRecommendBooks } from './useRecommendBooks';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { Loader } from '../../components/ui/loader/Loader';
+import { Container } from '../../components/ui/Container';
+import { Filters } from '../../components/Aside/Filters/Filters';
+import { Title } from '../../components/ui/Title';
 
 const styleButtons =
   'flex md:h-[40px] md:w-[40px] w-[32px] h-[32px] items-center justify-center rounded-[30px] border-[1px] border-[#F9F9F933] text-[#F9F9F9] disabled:text-[#F9F9F933]';
@@ -51,11 +54,13 @@ export default function Home() {
   }, [width]);
 
   return (
-    <section className="h-full w-full">
+    <Container
+      childrenSecond={
+        <Filters setCurrentPage={setCurrentPage} currentPage={currentPage} />
+      }
+    >
       <div className="mb-[20px] flex items-center justify-between">
-        <h2 className="text-[20px] font-bold leading-[32px] text-[#F9F9F9] md:text-[28px]">
-          Recommended
-        </h2>
+        <Title>Recommended</Title>
         <div className="flex items-center justify-end gap-[8px]">
           <button
             type="button"
@@ -76,6 +81,6 @@ export default function Home() {
         </div>
       </div>
       {isLoading ? <Loader /> : <BooksMarkup data={data} />}
-    </section>
+    </Container>
   );
 }

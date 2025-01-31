@@ -23,7 +23,7 @@ const defaultValues: ValidateLoginType = {
 export default function Login() {
   const navigate = useNavigate();
   const { mutate, isPending } = useFetchLogin();
-  const { token, setToken, setRefreshToken } = useAuth();
+  const { token, setToken } = useAuth();
 
   const {
     control,
@@ -39,7 +39,6 @@ export default function Login() {
     mutate(values, {
       onSuccess: (data) => {
         setToken(data.token);
-        setRefreshToken(data.refreshToken);
       },
       onError: (error) => {
         toast.error(error.message, {

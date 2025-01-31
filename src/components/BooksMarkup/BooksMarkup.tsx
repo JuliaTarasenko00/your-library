@@ -28,7 +28,7 @@ export const BooksMarkup: FC<BooksMarkupProps> = ({ data }) => {
           return (
             <li
               key={_id}
-              className="mx-auto mt-0 flex w-[120px] flex-col xs:w-[137px]"
+              className="mx-auto mt-0 flex w-[120px] cursor-pointer flex-col xs:w-[137px]"
               onClick={() => onDetailsBook(_id)}
             >
               <img

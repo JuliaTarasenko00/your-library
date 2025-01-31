@@ -2,13 +2,12 @@ import { logout } from '../../../api/auth';
 import { useAuth } from '../../../helpers/context/authContext/useAuth';
 
 export const LogOutButton = () => {
-  const { setToken, setRefreshToken } = useAuth();
+  const { setToken } = useAuth();
 
   const onSignOut = async () => {
     try {
       await logout();
       setToken('');
-      setRefreshToken('');
       return;
     } catch (error) {
       console.error(error);
