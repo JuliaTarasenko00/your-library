@@ -13,7 +13,7 @@ import { useAuth } from '../../helpers/context/authContext/useAuth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { toastErrorStyle } from '../../components/ui/toastErrorStyle';
+import { toastErrorStyle } from '../../components/ui/toastStyle';
 import { ComponentLoader } from '../../components/ui/loader/ComponentLoader';
 
 const defaultValues: TypeValidateRegister = {

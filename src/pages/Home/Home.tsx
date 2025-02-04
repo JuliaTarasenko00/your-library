@@ -80,7 +80,7 @@ export default function Home() {
           </button>
         </div>
       </div>
-      {isLoading ? <Loader /> : <BooksMarkup data={data} />}
+      {isLoading ? <Loader /> : <BooksMarkup data={data?.results} />}
     </Container>
   );
 }

@@ -12,7 +12,6 @@ export const PrivateRoute: FC<PrivateRouteProps> = ({
   redirectTo,
 }) => {
   const { token } = useAuth();
-  console.log('token: ', token);
 
   return !!token ? children : <Navigate to={redirectTo} />;
 };

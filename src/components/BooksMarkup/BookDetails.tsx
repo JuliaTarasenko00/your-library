@@ -1,9 +1,13 @@
 import { FC } from 'react';
-import { resultRecommendBook } from '../../types/recommendBook';
 import { Modal } from '../ui/modal/Modal';
+import { useAddBookToLibraryById } from './useAddBookToLibraryById';
+import { toast } from 'sonner';
+import { toastErrorStyle, toastSuccessStyle } from '../ui/toastStyle';
+import { BookInformation } from './BooksMarkup';
+import { useGetLibrary } from '../../pages/Library/useGetLibrary';
 
 interface BookDetailsProps {
-  book: resultRecommendBook;
+  book: BookInformation;
   closeModal: () => void;
   isOpen: boolean;
 }
@@ -13,6 +17,34 @@ export const BookDetails: FC<BookDetailsProps> = ({
   closeModal,
   isOpen,
 }) => {
+  const { mutate } = useAddBookToLibraryById();
+  const { data } = useGetLibrary();
+
+  const bookInLibrary =
+    data !== null &&
+    book !== null &&
+    data?.some(({ title }) => book.title === title);
+
+  console.log(bookInLibrary);
+
+  const onAddToLibrary = (id: string) => {
+    mutate(id, {
+      onSuccess: () => {
+        toast.success(
+          `Your book is now in the library! The joy knows no bounds and now you can start your training`,
+          {
+            style: toastSuccessStyle,
+          },
+        );
+      },
+      onError: (error: Error) => {
+        toast.error(error.message, {
+          style: toastErrorStyle,
+        });
+      },
+    });
+  };
+
   return (
     <Modal closeModal={closeModal} isOpen={isOpen}>
       {book !== null && (
@@ -33,12 +65,18 @@ export const BookDetails: FC<BookDetailsProps> = ({
           <p className="mb-[20px] text-[10px] leading-[12px] text-[#F9F9F9] md:mb-[32px]">
             {book.totalPages}
           </p>
-          <button
-            type="button"
-            className="transition-custom rounded-[30px] border-[1px] border-[#F9F9F933] px-[24px] py-[12px] text-[14px] font-bold leading-[18px] text-[#F9F9F9] hover:border-[#F9F9F9] hover:bg-[#F9F9F9] hover:text-[#1F1F1F] focus:border-[#F9F9F9] focus:bg-[#F9F9F9] focus:text-[#1F1F1F] md:px-[28px] md:py-[14px] md:text-[16px]"
-          >
-            Add to library
-          </button>
+
+          {bookInLibrary ? (
+            <p>Start reading</p>
+          ) : (
+            <button
+              type="button"
+              onClick={() => onAddToLibrary(book._id)}
+              className="transition-custom rounded-[30px] border-[1px] border-[#F9F9F933] px-[24px] py-[12px] text-[14px] font-bold leading-[18px] text-[#F9F9F9] hover:border-[#F9F9F9] hover:bg-[#F9F9F9] hover:text-[#1F1F1F] focus:border-[#F9F9F9] focus:bg-[#F9F9F9] focus:text-[#1F1F1F] md:px-[28px] md:py-[14px] md:text-[16px]"
+            >
+              Add to library
+            </button>
+          )}
         </div>
       )}
     </Modal>

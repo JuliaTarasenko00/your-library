@@ -48,7 +48,7 @@ export const Modal: FC<ModalProps> = ({ children, closeModal, isOpen }) => {
         className={`fixed inset-0 ${isOpen ? 'h-100% w-100% opacity-100' : 'h-0 w-0 opacity-0'} z-10 w-screen overflow-y-auto transition duration-[450ms] ease-out`}
       >
         <div
-          className={`flex min-h-full items-end justify-center ${isOpen ? 'h-100% w-100% opacity-100' : 'h-0 w-0 opacity-0'} sm:items-center sm:p-0 bg-[#14141499] p-4 text-center transition duration-[450ms] ease-out`}
+          className={`flex min-h-full items-center justify-center ${isOpen ? 'h-100% w-100% opacity-100' : 'h-0 w-0 opacity-0'} sm:items-center sm:p-0 bg-[#14141499] p-4 text-center transition duration-[450ms] ease-out`}
           onClick={onClickOverlay}
         >
           <div

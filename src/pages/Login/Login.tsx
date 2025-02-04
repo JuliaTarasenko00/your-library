@@ -11,7 +11,7 @@ import { PasswordInput } from '../../components/ui/inputs/PasswordInput';
 import { ValidateLoginType, validateSchemaLogin } from './validateSchema';
 import { useAuth } from '../../helpers/context/authContext/useAuth';
 import { toast } from 'sonner';
-import { toastErrorStyle } from '../../components/ui/toastErrorStyle';
+import { toastErrorStyle } from '../../components/ui/toastStyle';
 import { ComponentLoader } from '../../components/ui/loader/ComponentLoader';
 import { useFetchLogin } from './useFetchLogin';
 

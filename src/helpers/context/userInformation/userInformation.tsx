@@ -24,6 +24,7 @@ export const UserInformationProvider = ({
     queryKey: ['get/userInformation'],
     queryFn: getCurrent,
     enabled: !!token,
+    retry: false,
   });
 
   return (
