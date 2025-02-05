@@ -16,9 +16,16 @@ export type BookInformation = {
 
 interface BooksMarkupProps {
   data: Array<BookInformation> | undefined;
+  onDeleteBookFromLibrary?: (
+    ev: React.MouseEvent<HTMLButtonElement>,
+    id: string,
+  ) => void;
 }
 
-export const BooksMarkup: FC<BooksMarkupProps> = ({ data }) => {
+export const BooksMarkup: FC<BooksMarkupProps> = ({
+  data,
+  onDeleteBookFromLibrary,
+}) => {
   const { open, onToggleModal } = useToggleModal();
   const [bookDetails, setBookDetails] = useState<resultRecommendBook | null>(
     null,
@@ -66,6 +73,10 @@ export const BooksMarkup: FC<BooksMarkupProps> = ({ data }) => {
                 {myLibrary && (
                   <button
                     type="button"
+                    onClick={(ev: React.MouseEvent<HTMLButtonElement>) => {
+                      if (onDeleteBookFromLibrary)
+                        onDeleteBookFromLibrary(ev, _id);
+                    }}
                     className="flex h-[28px] w-[28px] min-w-[28px] items-center justify-center rounded-[14px] border-[1px] border-[#E8505033] bg-[#E850501A]"
                   >
                     <BiTrash className="h-[14px] w-[14px] text-[#E85050]" />

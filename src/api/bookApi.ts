@@ -1,4 +1,8 @@
-import { BookWithProgress } from '../types/libraryTypes';
+import {
+  AddBookToLibrary,
+  BookWithProgress,
+  DeleteBookResponse,
+} from '../types/libraryTypes';
 import { recommendBook } from '../types/recommendBook';
 import { $instants } from './request';
 
@@ -18,15 +22,27 @@ export const getRecommendBook = async (
 };
 
 export const addBookToLibraryById = async (id: string) => {
-  const { data } = await $instants.post<BookWithProgress[]>(
-    `${path}/add/${id}`,
-  );
+  const { data } = await $instants.post<BookWithProgress>(`${path}/add/${id}`);
 
   return data;
 };
 
 export const getMyLibrary = async () => {
   const { data } = await $instants.get<BookWithProgress[]>(`${path}/own`);
+
+  return data;
+};
+
+export const removeBookFromLibrary = async (id: string) => {
+  const { data } = await $instants.delete<DeleteBookResponse>(
+    `${path}/remove/${id}`,
+  );
+
+  return data;
+};
+
+export const addBookToLibrary = async (book: AddBookToLibrary) => {
+  const { data } = await $instants.post<BookWithProgress>(`${path}/add`, book);
 
   return data;
 };

@@ -5,15 +5,23 @@ import { routes } from '../../../helpers/path';
 import { Controller, useForm } from 'react-hook-form';
 import { submitButton } from '../Filters/filterStyle';
 import { TextInput } from '../../ui/inputs/TextInput';
+import { useAddBookToLibrary } from './useAddBookToLibrary';
+import { toast } from 'sonner';
+import { toastErrorStyle } from '../../ui/toastStyle';
+import { useQueryClient } from '@tanstack/react-query';
+import { ComponentLoader } from '../../ui/loader/ComponentLoader';
 
 const defaultValues = {
   title: '',
   author: '',
-  pages: 0,
+  totalPages: 0,
 };
 
 export const CreateLibrary = () => {
+  const queryClient = useQueryClient();
+
   const { data } = useRecommendBooks(2, 3);
+  const { mutate, isPending } = useAddBookToLibrary();
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -24,13 +32,25 @@ export const CreateLibrary = () => {
     mode: 'onSubmit',
   });
 
-  const submitForm = (values: typeof defaultValues) => {
-    console.log('values: ', values);
+  const submitForm = async (values: typeof defaultValues) => {
+    mutate(
+      { ...values, totalPages: Number(values.totalPages) },
+      {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({
+            queryKey: ['fetch/get_library'],
+          });
+        },
+        onError: (error: Error) => {
+          toast.error(error.message, { style: toastErrorStyle });
+        },
+      },
+    );
   };
 
   return (
     <>
-      <div>
+      <div className="w-full">
         <h2 className="mb-[8px] text-[10px] font-medium text-[#F9F9F9] md:text-[14px]">
           Create your library:
         </h2>
@@ -59,19 +79,19 @@ export const CreateLibrary = () => {
               )}
             />{' '}
             <Controller
-              name="pages"
+              name="totalPages"
               control={control}
               render={({ field }) => (
                 <TextInput
                   {...field}
-                  errorMessage={errors.pages?.message}
+                  errorMessage={errors.totalPages?.message}
                   label="Number of pages:"
                 />
               )}
             />
           </div>
-          <button type="submit" className={submitButton}>
-            To apply
+          <button type="submit" className={submitButton} disabled={isPending}>
+            {isPending ? <ComponentLoader /> : ' To apply'}
           </button>
         </form>
       </div>

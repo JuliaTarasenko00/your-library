@@ -1,3 +1,9 @@
+export type AddBookToLibrary = {
+  title: string;
+  author: string;
+  totalPages: number;
+};
+
 type ReadingStatus = 'in-progress' | 'unread';
 
 export type ProgressEntry = {
@@ -18,4 +24,9 @@ export type BookWithProgress = {
   status: ReadingStatus;
   owner: string;
   progress: ProgressEntry[];
+};
+
+export type DeleteBookResponse = {
+  message: string;
+  id: string;
 };

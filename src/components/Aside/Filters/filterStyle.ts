@@ -7,4 +7,4 @@ export const numberStyle =
 export const wrapper = 'flex items-center gap-[12px]';
 
 export const textStyle =
-  'text-[14px] font-medium leading-[18px] text-[#686868]';
+  'text-[14px] font-medium leading-[18px] text-[#686868] text-balance';

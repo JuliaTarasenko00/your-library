@@ -45,7 +45,7 @@ export const Filters: FC<FilterProps> = ({ setCurrentPage, currentPage }) => {
 
   return (
     <>
-      <div>
+      <div className="w-[100%]">
         <h2 className="mb-[8px] text-[10px] font-medium text-[#F9F9F9] md:text-[14px]">
           Filters:
         </h2>
@@ -135,7 +135,7 @@ export const Filters: FC<FilterProps> = ({ setCurrentPage, currentPage }) => {
 
       <div className="hidden items-center gap-[14px] rounded-[12px] bg-[#262626] px-[20px] py-[15px] lg:flex">
         <img src={book} alt="book" />
-        <p className="text-[14px] leading-[18px] text-[#686868]">
+        <p className="text-balance text-[14px] leading-[18px] text-[#686868]">
           "Books are <span className="text-[#F9F9F9]">windows</span> to the
           world, and reading is a journey into the unknown."
         </p>
