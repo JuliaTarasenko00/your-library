@@ -1,10 +1,11 @@
 import { FC, useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
+import { useLocation } from 'react-router-dom';
 import { useToggleModal } from '../../helpers/useToggleModal';
 import { BookDetails } from './BookDetails';
 import { resultRecommendBook } from '../../types/recommendBook';
-import { useLocation } from 'react-router-dom';
 import { routes } from '../../helpers/path';
+import img from '../../assets/img/image_not_found.jpg';
 
 export type BookInformation = {
   _id: string;
@@ -45,6 +46,7 @@ export const BooksMarkup: FC<BooksMarkupProps> = ({
         {data?.map(({ _id, imageUrl, title, author }) => {
           const lengthTitle = myLibrary ? 11 : 22;
           const newTitle = `${title.slice(0, lengthTitle)}${title.length >= lengthTitle ? '...' : ''}`;
+          const image = imageUrl !== null ? imageUrl : img;
           return (
             <li
               key={_id}
@@ -52,7 +54,7 @@ export const BooksMarkup: FC<BooksMarkupProps> = ({
               onClick={() => onDetailsBook(_id)}
             >
               <img
-                src={imageUrl}
+                src={image}
                 alt={title}
                 width={137}
                 height={208}

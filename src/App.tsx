@@ -11,6 +11,7 @@ const Register = lazy(() => import('./pages/Register/Register'));
 const Layout = lazy(() => import('./components/Layout/Layout'));
 const Home = lazy(() => import('./pages/Home/Home'));
 const Library = lazy(() => import('./pages/Library/Library'));
+const Reading = lazy(() => import('./pages/Reading/Reading'));
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           >
             <Route index element={<Home />} />
             <Route path={routes.library} element={<Library />} />
+            <Route path={routes.reading} element={<Reading />} />
           </Route>
         </Routes>
       </Suspense>

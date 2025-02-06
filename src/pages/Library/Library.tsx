@@ -12,7 +12,10 @@ import { useEffect, useState } from 'react';
 import { Loader } from '../../components/ui/loader/Loader';
 import { ReadingStatusSelector } from '../../components/ui/selector/ReadingStatusSelector';
 
+const options: Array<string> = ['Unread', 'In progress', 'Done', 'All books'];
+
 export default function Library() {
+  const [option, setOption] = useState<string>(options[options.length - 1]);
   const { data, isLoading } = useGetLibrary();
   const { mutate, isPending } = useRemoveBookFromLibrary();
   const [list, setList] = useState<BookWithProgress[] | []>([]);
@@ -47,7 +50,11 @@ export default function Library() {
     <Container childrenSecond={<CreateLibrary />}>
       <div className="mb-[28px] flex items-center justify-between">
         <Title>My library</Title>
-        <ReadingStatusSelector />
+        <ReadingStatusSelector
+          options={options}
+          option={option}
+          setOption={setOption}
+        />
       </div>
       {isLoader && <Loader />}
       {!isLoader && (

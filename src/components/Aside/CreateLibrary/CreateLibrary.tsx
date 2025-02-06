@@ -7,9 +7,8 @@ import { submitButton } from '../Filters/filterStyle';
 import { TextInput } from '../../ui/inputs/TextInput';
 import { useAddBookToLibrary } from './useAddBookToLibrary';
 import { toast } from 'sonner';
-import { toastErrorStyle } from '../../ui/toastStyle';
+import { toastErrorStyle, toastSuccessStyle } from '../../ui/toastStyle';
 import { useQueryClient } from '@tanstack/react-query';
-import { ComponentLoader } from '../../ui/loader/ComponentLoader';
 
 const defaultValues = {
   title: '',
@@ -39,6 +38,9 @@ export const CreateLibrary = () => {
         onSuccess: async () => {
           await queryClient.invalidateQueries({
             queryKey: ['fetch/get_library'],
+          });
+          toast.success(`Your book is now in the library!`, {
+            style: toastSuccessStyle,
           });
         },
         onError: (error: Error) => {
@@ -91,7 +93,7 @@ export const CreateLibrary = () => {
             />
           </div>
           <button type="submit" className={submitButton} disabled={isPending}>
-            {isPending ? <ComponentLoader /> : ' To apply'}
+            To apply
           </button>
         </form>
       </div>

@@ -1,3 +1,4 @@
+import { Book } from '../types/bookWithReadingProgress';
 import {
   AddBookToLibrary,
   BookWithProgress,
@@ -43,6 +44,12 @@ export const removeBookFromLibrary = async (id: string) => {
 
 export const addBookToLibrary = async (book: AddBookToLibrary) => {
   const { data } = await $instants.post<BookWithProgress>(`${path}/add`, book);
+
+  return data;
+};
+
+export const getBookById = async (id: string) => {
+  const { data } = await $instants.get<Book>(`${path}/${id}`);
 
   return data;
 };

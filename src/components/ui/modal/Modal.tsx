@@ -52,7 +52,7 @@ export const Modal: FC<ModalProps> = ({ children, closeModal, isOpen }) => {
           onClick={onClickOverlay}
         >
           <div
-            className={`relative rounded-[12px] border-[1px] border-[#68686833] bg-[#1F1F1F] px-[25px] py-[40px] md:p-[50px]`}
+            className={`relative rounded-[12px] border-[1px] border-[#68686833] bg-[#1F1F1F] px-[25px] py-[40px] md:min-w-[450px] md:p-[50px]`}
           >
             <button
               type="button"
