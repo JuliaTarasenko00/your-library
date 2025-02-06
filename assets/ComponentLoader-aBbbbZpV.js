@@ -1,1 +1,0 @@
-import{j as r}from"./index-CVkqP1uT.js";const e=()=>r.jsx("div",{className:"loader border-r-1 box-border h-[20px] w-[20px] animate-spin rounded-full border-t-2 border-solid border-black border-r-transparent"});export{e as C};
