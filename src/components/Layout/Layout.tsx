@@ -1,13 +1,21 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import logo from '../../assets/img/logo.png';
 import { useUserInformation } from '../../helpers/context/userInformation/useUserInformation';
 import { MainLoader } from '../ui/loader/MainLoader';
 import { TabletMenu } from './components/TabletMenu';
 import { MobileMenu } from './components/MobileMenu';
+import { useUnsavedChangesWarning } from '../../helpers/useUnsavedChangesWarning';
+import { useReadingControl } from '../../helpers/context/readingPageProgress/useReadingControl';
 
 export default function Layout() {
   const { data } = useUserInformation();
+  const { isReading } = useReadingControl();
+  useUnsavedChangesWarning();
+
+  // useEffect(() => {
+  //   if (isReading) useUnsavedChangesWarning('jopp');
+  // }, [isReading]);
 
   return (
     <>

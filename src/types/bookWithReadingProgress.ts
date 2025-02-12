@@ -1,4 +1,4 @@
-type ReadingProgress = {
+export type ReadingProgress = {
   startPage: number;
   startReading: string;
   finishPage: number;

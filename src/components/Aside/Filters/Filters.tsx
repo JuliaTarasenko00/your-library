@@ -1,15 +1,16 @@
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { TextInput } from '../../ui/inputs/TextInput';
-import { numberStyle, submitButton, textStyle, wrapper } from './filterStyle';
+import { numberStyle, textStyle, wrapper } from './filterStyle';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import book from '../../../assets/img/book.webp';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../helpers/path';
 import { useFilterBook } from '../../../helpers/context/filterByAuthorTile/useFilterBook';
+import { submitButton } from '../../ui/submitButtonStyle';
 
 interface FilterProps {
-  setCurrentPage: any;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
   currentPage: number;
 }
 

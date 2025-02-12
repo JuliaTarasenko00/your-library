@@ -3,12 +3,12 @@ import { FaArrowRightLong } from 'react-icons/fa6';
 import { useRecommendBooks } from '../../../pages/Home/useRecommendBooks';
 import { routes } from '../../../helpers/path';
 import { Controller, useForm } from 'react-hook-form';
-import { submitButton } from '../Filters/filterStyle';
 import { TextInput } from '../../ui/inputs/TextInput';
 import { useAddBookToLibrary } from './useAddBookToLibrary';
 import { toast } from 'sonner';
 import { toastErrorStyle, toastSuccessStyle } from '../../ui/toastStyle';
 import { useQueryClient } from '@tanstack/react-query';
+import { submitButton } from '../../ui/submitButtonStyle';
 
 const defaultValues = {
   title: '',

@@ -8,13 +8,15 @@ import { toastErrorStyle } from '../../components/ui/toastStyle';
 import { Book } from '../../types/bookWithReadingProgress';
 import { Loader } from '../../components/ui/loader/Loader';
 import { Title } from '../../components/ui/Title';
+import { ReadingAside } from '../../components/Aside/Reading/ReadingAside';
+import { useReadingControl } from '../../helpers/context/readingPageProgress/useReadingControl';
 
 export default function ReadingPage() {
   const { bookId } = useParams();
   const navigate = useNavigate();
   const { mutate, isPending } = useBookById();
   const [book, setBook] = useState<Book | null>(null);
-  const [isReading, setIsReading] = useState(false);
+  const { isReading } = useReadingControl();
 
   useEffect(() => {
     if (!bookId) {
@@ -34,18 +36,24 @@ export default function ReadingPage() {
   }, [bookId, mutate]);
 
   return (
-    <Container childrenSecond={<p>Aside</p>}>
+    <Container
+      childrenSecond={
+        <ReadingAside bookProgress={book?.progress} bookId={bookId as string} />
+      }
+    >
       {isPending && <Loader />}
       {book && !isPending && (
         <>
           <div className="flex flex-wrap items-center justify-between gap-[3px]">
             <Title>My reading</Title>
-            <p className="text-[10px] text-[#686868] md:text-[14px]">
-              {book.timeLeftToRead.hours > 0
-                ? `${book.timeLeftToRead.hours} hours and`
-                : ''}{' '}
-              {book.timeLeftToRead.minutes} minutes left
-            </p>
+            {book.timeLeftToRead !== undefined && (
+              <p className="text-[10px] text-[#686868] md:text-[14px]">
+                {book.timeLeftToRead.hours > 0
+                  ? `${book.timeLeftToRead.hours} hours and`
+                  : ''}{' '}
+                {book.timeLeftToRead.minutes} minutes left
+              </p>
+            )}
           </div>
           <div className="mg:mt-[40px] mt-[32px] place-items-center lg:mt-[44px]">
             <img
@@ -64,8 +72,7 @@ export default function ReadingPage() {
             </p>
             <button
               type="button"
-              onClick={() => setIsReading(!isReading)}
-              className="flex h-[40px] w-[40px] items-center justify-center rounded-[50%] border-[1.5px] border-[#F9F9F9] bg-transparent md:h-[50px] md:w-[50px]"
+              className="flex h-[40px] w-[40px] cursor-none items-center justify-center rounded-[50%] border-[1.5px] border-[#F9F9F9] bg-transparent md:h-[50px] md:w-[50px]"
             >
               <span
                 className={`inline-block ${isReading ? 'h-[37%] w-[37%] rounded-[3px]' : 'h-[87%] w-[87%] rounded-[50%]'} transition-custom bg-[#E90516]`}
