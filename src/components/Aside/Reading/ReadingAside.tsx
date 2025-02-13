@@ -1,29 +1,36 @@
 import { FC, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { TextInput } from '../../ui/inputs/TextInput';
-import { useReadingControl } from '../../../helpers/context/readingPageProgress/useReadingControl';
 import { submitButton } from '../../ui/submitButtonStyle';
-import { ReadingProgress } from '../../../types/bookWithReadingProgress';
+import { Book } from '../../../types/bookWithReadingProgress';
 import { EmptyProgress } from './EmptyProgress';
+import { ToggleComponent } from './components/ToggleComponent';
 
 interface ReadingAsideProps {
-  bookProgress: ReadingProgress[] | undefined;
+  book: Book | null;
   bookId: string;
+  isActive: boolean;
+  handleStartReading: (id: string, page: number) => void;
+  handleSubmitForm: ({ page }: { page: number }) => void;
+  pendingStartReading: boolean;
+  pendingFinishReading: boolean;
+  isPending: boolean;
 }
 
 export const ReadingAside: FC<ReadingAsideProps> = ({
-  bookProgress,
+  book,
   bookId,
+  isActive,
+  handleStartReading,
+  handleSubmitForm,
+  pendingStartReading,
+  pendingFinishReading,
+  isPending,
 }) => {
-  const {
-    isReading,
-    setIsReading,
-    setBookId,
-    bookId: id,
-  } = useReadingControl();
+  const bookProgress = book?.progress;
   const page =
-    bookProgress && bookProgress[bookProgress?.length - 1]?.finishPage;
-  console.log('bookProgress: ', bookProgress);
+    (bookProgress && bookProgress[bookProgress?.length - 1]?.finishPage) ||
+    (bookProgress && bookProgress[bookProgress?.length - 1]?.startPage);
 
   const {
     control,
@@ -42,22 +49,11 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
     }
   }, [page, reset]);
 
-  useEffect(() => {
-    if (bookId !== id) {
-      setIsReading(false);
-    }
-  }, [bookId, id]);
-
-  const handleSubmitForm = (value: any) => {
-    console.log('value: ', value);
-    setIsReading(false);
-  };
-
   return (
     <>
       <div>
         <h3 className="mb-[8px]">
-          {!isReading ? 'Start page:' : 'Finish page:'}
+          {!isActive ? 'Start page:' : 'Finish page:'}
         </h3>
         <form
           onSubmit={handleSubmit(handleSubmitForm)}
@@ -74,18 +70,21 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
               />
             )}
           />
-          {isReading && (
-            <button type="submit" disabled={!isDirty} className={submitButton}>
+          {isActive && (
+            <button
+              type="submit"
+              disabled={!isDirty || pendingFinishReading}
+              className={submitButton}
+            >
               To Stop
             </button>
           )}
-          {!isReading && (
+          {!isActive && (
             <button
               type="button"
+              disabled={pendingStartReading}
+              onClick={() => handleStartReading(bookId, page as number)}
               className={submitButton}
-              onClick={() => {
-                setIsReading(true), setBookId(bookId);
-              }}
             >
               To Start
             </button>
@@ -93,10 +92,9 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
         </form>
       </div>
 
-      <div className="mt-[40px] h-[100%]">
-        <h3 className="text-[20px] font-bold text-[#F9F9F9]">Progress</h3>
-        {!bookProgress?.length && <EmptyProgress />}
-      </div>
+      {!bookProgress?.length && !isPending && <EmptyProgress />}
+
+      {!!bookProgress?.length && <ToggleComponent book={book} />}
     </>
   );
 };

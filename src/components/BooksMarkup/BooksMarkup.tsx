@@ -32,7 +32,7 @@ export const BooksMarkup: FC<BooksMarkupProps> = ({
     null,
   );
   const { pathname } = useLocation();
-  const myLibrary = pathname === routes.library;
+  const myLibrary = pathname.slice(1) === routes.library;
 
   const onDetailsBook = (id: string) => {
     const book = data?.find(({ _id }) => _id === id);

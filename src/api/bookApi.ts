@@ -53,3 +53,21 @@ export const getBookById = async (id: string) => {
 
   return data;
 };
+
+export const startReadingBook = async (id: string, page: number) => {
+  const { data } = await $instants.post<Book>(`${path}/reading/start`, {
+    id,
+    page,
+  });
+
+  return data;
+};
+
+export const finishReadingBook = async (id: string, page: number) => {
+  const { data } = await $instants.post<Book>(`${path}/reading/finish`, {
+    id,
+    page,
+  });
+
+  return data;
+};

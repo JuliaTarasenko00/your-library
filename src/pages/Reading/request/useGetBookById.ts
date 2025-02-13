@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { getBookById } from '../../api/bookApi';
+import { getBookById } from '../../../api/bookApi';
 
 export const useBookById = () => {
   const { mutate, isPending } = useMutation({

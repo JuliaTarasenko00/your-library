@@ -1,26 +1,41 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { routes } from '../../helpers/path';
-import { useBookById } from './useGetBookById';
 import { toast } from 'sonner';
 import { toastErrorStyle } from '../../components/ui/toastStyle';
 import { Book } from '../../types/bookWithReadingProgress';
 import { Loader } from '../../components/ui/loader/Loader';
 import { Title } from '../../components/ui/Title';
 import { ReadingAside } from '../../components/Aside/Reading/ReadingAside';
-import { useReadingControl } from '../../helpers/context/readingPageProgress/useReadingControl';
+import { useBookById } from './request/useGetBookById';
+import { useStartReadingBook } from './request/useStartReadingBook';
+import { useFinishReadingBook } from './request/useFinishReadingBook';
+import img from '../../assets/img/image_not_found.jpg';
 
 export default function ReadingPage() {
-  const { bookId } = useParams();
+  const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
   const { mutate, isPending } = useBookById();
+  const { mutate: startReading, isPending: pendingStartReading } =
+    useStartReadingBook();
+  const { mutate: finishReading, isPending: pendingFinishReading } =
+    useFinishReadingBook();
   const [book, setBook] = useState<Book | null>(null);
-  const { isReading } = useReadingControl();
+  const image = book?.imageUrl !== null ? book?.imageUrl : img;
+
+  const isActive = book?.progress.some(({ status }) => status === 'active');
+  const timeToLeft = useMemo(
+    () =>
+      book?.timeLeftToRead &&
+      Object.values(book.timeLeftToRead).every((el) => el !== null),
+    [book],
+  );
 
   useEffect(() => {
     if (!bookId) {
       navigate(routes.main);
+      return;
     } else {
       mutate(bookId, {
         onSuccess: (data: Book) => {
@@ -35,10 +50,47 @@ export default function ReadingPage() {
     }
   }, [bookId, mutate]);
 
+  const handleStartReading = useCallback(
+    (id: string, page = 1) => {
+      startReading(
+        { id, page },
+        {
+          onSuccess: setBook,
+          onError: (error) =>
+            toast.error(error.message, { style: toastErrorStyle }),
+        },
+      );
+    },
+    [startReading],
+  );
+
+  const handleSubmitForm = useCallback(
+    ({ page }: { page: number }) => {
+      if (!bookId) return;
+      finishReading(
+        { id: bookId, page },
+        {
+          onSuccess: setBook,
+          onError: (error) =>
+            toast.error(error.message, { style: toastErrorStyle }),
+        },
+      );
+    },
+    [bookId, finishReading],
+  );
   return (
     <Container
       childrenSecond={
-        <ReadingAside bookProgress={book?.progress} bookId={bookId as string} />
+        <ReadingAside
+          book={book}
+          bookId={bookId as string}
+          isActive={isActive as boolean}
+          handleStartReading={handleStartReading}
+          handleSubmitForm={handleSubmitForm}
+          pendingStartReading={pendingStartReading}
+          pendingFinishReading={pendingFinishReading}
+          isPending={isPending}
+        />
       }
     >
       {isPending && <Loader />}
@@ -46,7 +98,7 @@ export default function ReadingPage() {
         <>
           <div className="flex flex-wrap items-center justify-between gap-[3px]">
             <Title>My reading</Title>
-            {book.timeLeftToRead !== undefined && (
+            {timeToLeft && (
               <p className="text-[10px] text-[#686868] md:text-[14px]">
                 {book.timeLeftToRead.hours > 0
                   ? `${book.timeLeftToRead.hours} hours and`
@@ -57,7 +109,7 @@ export default function ReadingPage() {
           </div>
           <div className="mg:mt-[40px] mt-[32px] place-items-center lg:mt-[44px]">
             <img
-              src={book.imageUrl}
+              src={image}
               alt={book.title}
               width={137}
               height={208}
@@ -75,7 +127,7 @@ export default function ReadingPage() {
               className="flex h-[40px] w-[40px] cursor-none items-center justify-center rounded-[50%] border-[1.5px] border-[#F9F9F9] bg-transparent md:h-[50px] md:w-[50px]"
             >
               <span
-                className={`inline-block ${isReading ? 'h-[37%] w-[37%] rounded-[3px]' : 'h-[87%] w-[87%] rounded-[50%]'} transition-custom bg-[#E90516]`}
+                className={`inline-block ${isActive ? 'h-[37%] w-[37%] rounded-[3px]' : 'h-[87%] w-[87%] rounded-[50%]'} transition-custom bg-[#E90516]`}
               ></span>
             </button>
           </div>
