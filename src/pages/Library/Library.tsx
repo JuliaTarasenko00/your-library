@@ -38,8 +38,8 @@ export default function Library() {
         const newBookList = data?.filter(({ _id }) => book.id !== _id);
         setList(newBookList as BookWithProgress[]);
       },
-      onError: (error: Error) => {
-        toast.error(error.message, {
+      onError: (error: any) => {
+        toast.error(error.response.data.message, {
           style: toastErrorStyle,
         });
       },

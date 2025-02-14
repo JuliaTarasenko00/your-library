@@ -51,7 +51,7 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
 
   return (
     <>
-      <div>
+      <div className="w-full">
         <h3 className="mb-[8px]">
           {!isActive ? 'Start page:' : 'Finish page:'}
         </h3>

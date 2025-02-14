@@ -11,7 +11,7 @@ export const Container = ({
   return (
     <div className="container-custom grid gap-[16px] pb-[27px] lg:grid-cols-[1fr_2.6fr]">
       <Aside>{childrenSecond}</Aside>
-      <section className="min-h-[398px] rounded-[30px] bg-[#1F1F1F] px-[20px] py-[40px] md:min-h-[681px] md:p-[40px] lg:min-h-full">
+      <section className="min-h-full rounded-[30px] bg-[#1F1F1F] px-[20px] py-[40px] md:p-[40px]">
         {children}
       </section>
     </div>

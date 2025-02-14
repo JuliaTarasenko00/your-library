@@ -5,6 +5,7 @@ export type ReadingProgress = {
   finishReading: string;
   speed: number;
   status: 'inactive' | 'active';
+  _id: string;
 };
 
 type TimeLeftToRead = {

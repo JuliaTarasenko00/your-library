@@ -46,9 +46,9 @@ export const ProgressChart: FC<ProgressChartProps> = ({
 
   return (
     <>
-      <div className="relative h-[168px] w-[168px] place-self-center">
+      <div className="relative h-max w-[116px] place-self-center md:w-[138px] lg:h-[168px] lg:w-[168px]">
         <Doughnut data={data} options={options} />
-        <p className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] text-[20px] font-bold text-[#F9F9F9]">
+        <p className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] text-[18px] font-bold text-[#F9F9F9] md:text-[20px]">
           100%
         </p>
       </div>
@@ -58,7 +58,7 @@ export const ProgressChart: FC<ProgressChartProps> = ({
           style={{ background: activeColor }}
         ></span>{' '}
         <div className="flex flex-col items-start gap-[3px]">
-          <p className="text-[20px] leading-[20px] tracking-tighter text-[#F9F9F9]">
+          <p className="text-[14px] leading-[14px] tracking-tighter text-[#F9F9F9] md:text-[20px] md:leading-[20px]">
             {fixedPercentage}%
           </p>
           <p className="text-[12px] leading-[14px] text-[#686868]">

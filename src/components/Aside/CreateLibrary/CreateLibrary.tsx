@@ -43,8 +43,10 @@ export const CreateLibrary = () => {
             style: toastSuccessStyle,
           });
         },
-        onError: (error: Error) => {
-          toast.error(error.message, { style: toastErrorStyle });
+        onError: (error: any) => {
+          toast.error(error.response.data.message, {
+            style: toastErrorStyle,
+          });
         },
       },
     );

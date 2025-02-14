@@ -6,6 +6,8 @@ import {
   Book,
   ReadingProgress,
 } from '../../../../types/bookWithReadingProgress';
+import './stylewebkit.css';
+import { DiaryChart } from './DiaryChart';
 
 type OptionsType = {
   title: string;
@@ -19,14 +21,7 @@ export const ToggleComponent = ({ book }: { book: Book | null }) => {
   const options: OptionsType[] = [
     {
       title: 'Diary',
-      element: (
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed dolorem
-          alias excepturi, earum consequuntur sapiente architecto nihil sit
-          doloribus pariatur nam aut nobis, temporibus officia esse at. Et, non
-          ex!
-        </p>
-      ),
+      element: <DiaryChart progress={book?.progress} />,
     },
     {
       title: 'Statistic',
@@ -48,9 +43,7 @@ export const ToggleComponent = ({ book }: { book: Book | null }) => {
   return (
     <div className="w-full">
       <div className="mb-[20px] flex items-center">
-        <h2
-          className={`text-[20px] font-bold leading-[20px] text-[#F9F9F9] transition-opacity duration-[800ms]`}
-        >
+        <h2 className={`text-[20px] font-bold leading-[20px] text-[#F9F9F9]`}>
           {options[activeIndex].title}
         </h2>
 
@@ -58,14 +51,14 @@ export const ToggleComponent = ({ book }: { book: Book | null }) => {
           <button
             type="button"
             onClick={() => handleToggle(0)}
-            className={`${activeIndex !== 0 ? 'text-[#686868]' : 'text-[#F9F9F9]'} h-[20px] w-[20px] transition-colors duration-300 hover:text-[#f9f9f9] focus:text-[#f9f9f9]`}
+            className={`${activeIndex !== 0 ? 'text-[#686868]' : 'text-[#F9F9F9]'} h-[20px] w-[20px] outline-none transition-colors duration-300 hover:text-[#f9f9f9] focus:text-[#f9f9f9]`}
           >
             <GiSandsOfTime />
           </button>
           <button
             type="button"
             onClick={() => handleToggle(1)}
-            className={`${activeIndex !== 1 ? 'text-[#686868]' : 'text-[#F9F9F9]'} h-[20px] w-[20px] transition-colors duration-300 hover:text-[#f9f9f9] focus:text-[#f9f9f9]`}
+            className={`${activeIndex !== 1 ? 'text-[#686868]' : 'text-[#F9F9F9]'} h-[20px] w-[20px] outline-none transition-colors duration-300 hover:text-[#f9f9f9] focus:text-[#f9f9f9]`}
           >
             <AiOutlinePieChart />
           </button>
@@ -73,26 +66,27 @@ export const ToggleComponent = ({ book }: { book: Book | null }) => {
       </div>
 
       {options[activeIndex].description && (
-        <p className="mb-[20px] text-[14px] tracking-tight text-[#686868]">
+        <p className="mb-[20px] hidden text-[14px] tracking-tight text-[#686868] lg:block">
           {options[activeIndex].description}
         </p>
       )}
-
-      <div className="relative h-max w-full rounded-[12px] bg-[#262626] px-[20px] py-[20px] transition duration-[600ms]">
-        {options.map((option: OptionsType, index: number) => {
-          return (
-            <div
-              key={index}
-              className={`relative w-full transform overflow-hidden transition duration-[800ms] ${
-                activeIndex === index
-                  ? 'bottom-0 translate-y-0 opacity-100'
-                  : 'pointer-events-none bottom-[-100%] h-0 w-0 translate-y-5 opacity-0'
-              }`}
-            >
-              {activeIndex === index ? <>{option.element}</> : ''}
-            </div>
-          );
-        })}
+      <div className="max-h-[295px] overflow-x-scroll pr-[3px] md:max-h-[252px] lg:max-h-[313px]">
+        <div className="relative h-max w-full overflow-hidden rounded-[12px] bg-[#262626] p-[16px] transition duration-[600ms] lg:px-[20px] lg:py-[20px]">
+          {options.map((option: OptionsType, index: number) => {
+            return (
+              <div
+                key={index}
+                className={`relative h-full w-full transform transition duration-[800ms] ${
+                  activeIndex === index
+                    ? 'bottom-0 translate-y-0 opacity-100'
+                    : 'pointer-events-none bottom-[-100%] h-0 w-0 translate-y-5 opacity-0'
+                }`}
+              >
+                {activeIndex === index ? <>{option.element}</> : ''}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

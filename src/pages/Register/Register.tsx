@@ -37,13 +37,13 @@ export default function Register() {
     resolver: yupResolver(validateRegisterSchema),
   });
 
-  const onSubmitForm = (values: TypeValidateRegister) => {
+  const onSubmitForm = (values: TypeValidateRegister): void => {
     mutate(values, {
       onSuccess: (data) => {
         setToken(data.token);
       },
-      onError: (error) => {
-        toast.error(error.message, {
+      onError: (error: any) => {
+        toast.error(error.response.data.message, {
           style: toastErrorStyle,
         });
       },

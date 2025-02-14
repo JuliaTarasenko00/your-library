@@ -35,13 +35,13 @@ export default function Login() {
     resolver: yupResolver(validateSchemaLogin),
   });
 
-  const submitForm = (values: ValidateLoginType) => {
+  const submitForm = (values: ValidateLoginType): void => {
     mutate(values, {
       onSuccess: (data) => {
         setToken(data.token);
       },
-      onError: (error) => {
-        toast.error(error.message, {
+      onError: (error: any) => {
+        toast.error(error.response.data.message, {
           style: toastErrorStyle,
         });
       },

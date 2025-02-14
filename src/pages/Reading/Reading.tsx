@@ -41,8 +41,8 @@ export default function ReadingPage() {
         onSuccess: (data: Book) => {
           setBook(data);
         },
-        onError: (error) => {
-          toast.error(error.message, {
+        onError: (error: any) => {
+          toast.error(error.response.data.message, {
             style: toastErrorStyle,
           });
         },
@@ -56,8 +56,10 @@ export default function ReadingPage() {
         { id, page },
         {
           onSuccess: setBook,
-          onError: (error) =>
-            toast.error(error.message, { style: toastErrorStyle }),
+          onError: (error: any) =>
+            toast.error(error.response.data.message, {
+              style: toastErrorStyle,
+            }),
         },
       );
     },
@@ -71,8 +73,10 @@ export default function ReadingPage() {
         { id: bookId, page },
         {
           onSuccess: setBook,
-          onError: (error) =>
-            toast.error(error.message, { style: toastErrorStyle }),
+          onError: (error: any) =>
+            toast.error(error.response.data.message, {
+              style: toastErrorStyle,
+            }),
         },
       );
     },

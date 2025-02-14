@@ -12,6 +12,11 @@
   border-radius: 2px;
 }
 
+::-webkit-scrollbar-corner {
+  background: transparent;
+  color: transparent;
+}
+
 body {
   margin: 0;
   font-family: 'Open Sans', serif;
