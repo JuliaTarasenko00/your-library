@@ -7,3 +7,11 @@
   color: transparent;
   border-radius: 15px;
 }
+
+.wrapper_diary:first-of-type > p {
+  color: #f9f9f9;
+}
+
+.wrapper_diary > p {
+  color: #686868;
+}

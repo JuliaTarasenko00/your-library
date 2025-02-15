@@ -21,7 +21,12 @@ export const ToggleComponent = ({ book }: { book: Book | null }) => {
   const options: OptionsType[] = [
     {
       title: 'Diary',
-      element: <DiaryChart progress={book?.progress} />,
+      element: (
+        <DiaryChart
+          progress={book?.progress}
+          totalPage={book?.totalPages as number}
+        />
+      ),
     },
     {
       title: 'Statistic',
