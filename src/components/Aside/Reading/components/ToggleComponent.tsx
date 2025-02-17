@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { AiOutlinePieChart } from 'react-icons/ai';
 import { ProgressChart } from './ProgressChart';
@@ -9,13 +9,21 @@ import {
 import './stylewebkit.css';
 import { DiaryChart } from './DiaryChart';
 
+interface ToggleComponentProps {
+  handleDeleteReadingTime: (readingId: string) => void;
+  book: Book | null;
+}
+
 type OptionsType = {
   title: string;
   element: ReactNode;
   description?: string;
 };
 
-export const ToggleComponent = ({ book }: { book: Book | null }) => {
+export const ToggleComponent: FC<ToggleComponentProps> = ({
+  book,
+  handleDeleteReadingTime,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const options: OptionsType[] = [
@@ -23,6 +31,7 @@ export const ToggleComponent = ({ book }: { book: Book | null }) => {
       title: 'Diary',
       element: (
         <DiaryChart
+          handleDeleteReadingTime={handleDeleteReadingTime}
           progress={book?.progress}
           totalPage={book?.totalPages as number}
         />
@@ -48,7 +57,9 @@ export const ToggleComponent = ({ book }: { book: Book | null }) => {
   return (
     <div className="w-full">
       <div className="mb-[20px] flex items-center">
-        <h2 className={`text-[20px] font-bold leading-[20px] text-[#F9F9F9]`}>
+        <h2
+          className={`text-[18px] font-bold leading-[20px] text-[#F9F9F9] md:text-[20px]`}
+        >
           {options[activeIndex].title}
         </h2>
 
@@ -75,7 +86,7 @@ export const ToggleComponent = ({ book }: { book: Book | null }) => {
           {options[activeIndex].description}
         </p>
       )}
-      <div className="max-h-[295px] overflow-x-scroll pr-[3px] md:max-h-[252px] lg:max-h-[313px]">
+      <div className="max-h-[200px] overflow-x-hidden overflow-y-scroll rounded-[12px] pr-[3px] md:max-h-[252px] lg:max-h-[323px]">
         <div className="relative h-max w-full overflow-hidden rounded-[12px] bg-[#262626] p-[16px] transition duration-[600ms] lg:px-[20px] lg:py-[20px]">
           {options.map((option: OptionsType, index: number) => {
             return (

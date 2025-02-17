@@ -12,6 +12,7 @@ interface ReadingAsideProps {
   isActive: boolean;
   handleStartReading: (id: string, page: number) => void;
   handleSubmitForm: ({ page }: { page: number }) => void;
+  handleDeleteReadingTime: (readingId: string) => void;
   pendingStartReading: boolean;
   pendingFinishReading: boolean;
   isPending: boolean;
@@ -25,12 +26,17 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
   handleSubmitForm,
   pendingStartReading,
   pendingFinishReading,
+  handleDeleteReadingTime,
   isPending,
 }) => {
   const bookProgress = book?.progress;
   const page =
     (bookProgress && bookProgress[bookProgress?.length - 1]?.finishPage) ||
     (bookProgress && bookProgress[bookProgress?.length - 1]?.startPage);
+
+  const isEmpty =
+    !book?.progress?.length ||
+    (bookProgress?.[0]?.status === 'active' && (page ?? 1) <= 1);
 
   const {
     control,
@@ -39,13 +45,15 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
     formState: { errors, isDirty },
   } = useForm({
     defaultValues: {
-      page: page ?? 0,
+      page: page || 0,
     },
   });
 
   useEffect(() => {
     if (page !== undefined) {
       reset({ page });
+    } else {
+      reset({ page: 0 });
     }
   }, [page, reset]);
 
@@ -66,6 +74,7 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
               <TextInput
                 {...field}
                 label="Page number:"
+                disabled={!isActive}
                 errorMessage={errors.page?.message}
               />
             )}
@@ -92,9 +101,14 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
         </form>
       </div>
 
-      {!bookProgress?.length && !isPending && <EmptyProgress />}
+      {((!bookProgress?.length && !isPending) || isEmpty) && <EmptyProgress />}
 
-      {!!bookProgress?.length && <ToggleComponent book={book} />}
+      {!!bookProgress?.length && !isEmpty && (
+        <ToggleComponent
+          book={book}
+          handleDeleteReadingTime={handleDeleteReadingTime}
+        />
+      )}
     </>
   );
 };

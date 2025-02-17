@@ -71,3 +71,11 @@ export const finishReadingBook = async (id: string, page: number) => {
 
   return data;
 };
+
+export const removeReadingTime = async (bookId: string, readingId: string) => {
+  const { data } = await $instants.delete<Book>(
+    `${path}/reading?bookId=${bookId}&readingId=${readingId}`,
+  );
+
+  return data;
+};

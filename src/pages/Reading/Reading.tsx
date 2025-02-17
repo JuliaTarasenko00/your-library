@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { routes } from '../../helpers/path';
 import { toast } from 'sonner';
 import { toastErrorStyle } from '../../components/ui/toastStyle';
@@ -12,6 +12,7 @@ import { useBookById } from './request/useGetBookById';
 import { useStartReadingBook } from './request/useStartReadingBook';
 import { useFinishReadingBook } from './request/useFinishReadingBook';
 import img from '../../assets/img/image_not_found.jpg';
+import { useDeleteReadingTime } from './request/useDeleteReadingTime';
 
 export default function ReadingPage() {
   const { bookId } = useParams<{ bookId: string }>();
@@ -21,6 +22,7 @@ export default function ReadingPage() {
     useStartReadingBook();
   const { mutate: finishReading, isPending: pendingFinishReading } =
     useFinishReadingBook();
+  const { mutate: deleteReadingTime } = useDeleteReadingTime();
   const [book, setBook] = useState<Book | null>(null);
   const image = book?.imageUrl !== null ? book?.imageUrl : img;
 
@@ -50,38 +52,48 @@ export default function ReadingPage() {
     }
   }, [bookId, mutate]);
 
-  const handleStartReading = useCallback(
-    (id: string, page = 1) => {
-      startReading(
-        { id, page },
-        {
-          onSuccess: setBook,
-          onError: (error: any) =>
-            toast.error(error.response.data.message, {
-              style: toastErrorStyle,
-            }),
-        },
-      );
-    },
-    [startReading],
-  );
+  const handleStartReading = (id: string, page = 1) => {
+    startReading(
+      { id, page },
+      {
+        onSuccess: (data) => setBook(data),
+        onError: (error: any) =>
+          toast.error(error.response.data.message, {
+            style: toastErrorStyle,
+          }),
+      },
+    );
+  };
 
-  const handleSubmitForm = useCallback(
-    ({ page }: { page: number }) => {
-      if (!bookId) return;
-      finishReading(
-        { id: bookId, page },
-        {
-          onSuccess: setBook,
-          onError: (error: any) =>
-            toast.error(error.response.data.message, {
-              style: toastErrorStyle,
-            }),
-        },
-      );
-    },
-    [bookId, finishReading],
-  );
+  const handleSubmitForm = ({ page }: { page: number }) => {
+    if (!bookId) return;
+    finishReading(
+      { id: bookId, page },
+      {
+        onSuccess: (data) => setBook(data),
+        onError: (error: any) =>
+          toast.error(error.response.data.message, {
+            style: toastErrorStyle,
+          }),
+      },
+    );
+  };
+
+  const handleDeleteReadingTime = (readingId: string) => {
+    if (!bookId) return;
+
+    deleteReadingTime(
+      { bookId, readingId },
+      {
+        onSuccess: (data) => setBook(data),
+        onError: (error: any) =>
+          toast.error(error.response.data.message, {
+            style: toastErrorStyle,
+          }),
+      },
+    );
+  };
+
   return (
     <Container
       childrenSecond={
@@ -94,6 +106,7 @@ export default function ReadingPage() {
           pendingStartReading={pendingStartReading}
           pendingFinishReading={pendingFinishReading}
           isPending={isPending}
+          handleDeleteReadingTime={handleDeleteReadingTime}
         />
       }
     >

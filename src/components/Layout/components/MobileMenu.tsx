@@ -25,7 +25,7 @@ export const MobileMenu = ({ name }: { name: string }) => {
         </button>
       </div>
       <div
-        className={` ${isHidden ? hidden : visible} transition-custom fixed right-0 top-0 z-[60px] flex h-full w-[60%] max-w-[300px] flex-col items-center justify-center bg-[#262626] px-[55px] py-[40px] md:hidden`}
+        className={` ${isHidden ? hidden : visible} transition-custom fixed right-0 top-0 z-[60] flex h-full w-[60%] max-w-[300px] flex-col items-center justify-center bg-[#262626] px-[55px] py-[40px] md:hidden`}
       >
         <ul className="flex flex-col items-start gap-[20px]">
           <NavigateMenu />

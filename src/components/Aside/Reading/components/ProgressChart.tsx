@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { ReadingProgress } from '../../../../types/bookWithReadingProgress';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { progressOptions } from './options';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -38,16 +39,10 @@ export const ProgressChart: FC<ProgressChartProps> = ({
     ],
   };
 
-  const options = {
-    plugins: {
-      tooltip: { enabled: false },
-    },
-  };
-
   return (
     <>
       <div className="relative h-max w-[116px] place-self-center md:w-[138px] lg:h-[168px] lg:w-[168px]">
-        <Doughnut data={data} options={options} />
+        <Doughnut data={data} options={progressOptions} />
         <p className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] text-[18px] font-bold text-[#F9F9F9] md:text-[20px]">
           100%
         </p>

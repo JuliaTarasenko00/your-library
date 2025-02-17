@@ -8,10 +8,10 @@
   border-radius: 15px;
 }
 
-.wrapper_diary:first-of-type > p {
+.wrapper_diary:first-of-type > .diary_date_wrapper > .diary_date {
   color: #f9f9f9;
 }
 
-.wrapper_diary > p {
+.wrapper_diary > .diary_date_wrapper > .diary_date {
   color: #686868;
 }
