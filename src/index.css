@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scrollbar-gutter: stable;
+}
+
 ::-webkit-scrollbar {
   width: 15px;
 }
@@ -23,7 +27,6 @@ body {
   background-color: #141414;
   font-optical-sizing: auto;
   font-style: normal;
-  font-variation-settings: 'wdth' 100;
   -webkit-text-size-adjust: 100%;
   color: #f9f9f9;
 }
@@ -68,6 +71,7 @@ input:focus {
 input,
 textarea,
 select {
+  font-size: 100%;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;

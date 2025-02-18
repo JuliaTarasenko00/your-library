@@ -17,7 +17,7 @@ export const EmailInput: FC<EmailInputProps> = forwardRef(
             type="email"
             {...rest}
             ref={_ref}
-            className={`w-full rounded-[12px] border-[1px] bg-[#262626] py-[16px] pl-[53px] pr-[14px] text-[12px] text-[#F9F9F9] md:text-[14px] ${errorMessage ? 'border-[#E90516]' : 'border-transparent hover:border-[#F9F9F91A] focus:border-[#F9F9F91A]'} outline-none transition duration-300`}
+            className={`pr-[14px]text-[#F9F9F9] w-full rounded-[12px] border-[1px] bg-[#262626] py-[16px] pl-[53px] ${errorMessage ? 'border-[#E90516]' : 'border-transparent hover:border-[#F9F9F91A] focus:border-[#F9F9F91A]'} outline-none transition duration-300`}
           />
         </div>
         {errorMessage && <ErrorTitle>{errorMessage}</ErrorTitle>}

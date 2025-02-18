@@ -38,7 +38,7 @@ export const TextInput: FC<TextInputProps> = forwardRef(
             type="text"
             {...rest}
             ref={_ref}
-            className={`w-full rounded-[12px] border-[1px] bg-[#262626] py-[16px] pr-[14px] text-[12px] text-[#F9F9F9] md:text-[14px] ${errorMessage ? 'border-[#E90516]' : 'border-transparent hover:border-[#F9F9F91A] focus:border-[#F9F9F91A]'} outline-none transition duration-300`}
+            className={`w-full rounded-[12px] border-[1px] bg-[#262626] py-[16px] pr-[14px] text-[#F9F9F9] ${errorMessage ? 'border-[#E90516]' : 'border-transparent hover:border-[#F9F9F91A] focus:border-[#F9F9F91A]'} outline-none transition duration-300`}
             style={{ paddingLeft: `${labelWidth}px` }}
           />
         </div>

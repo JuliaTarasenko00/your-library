@@ -37,22 +37,26 @@ export const MobileMenu = ({ name }: { name: string }) => {
         </button>
       </div>
       <div
-        ref={menuRef}
-        className={` ${isHidden ? hidden : visible} transition-custom fixed right-0 top-0 z-[60] flex h-full w-[60%] max-w-[300px] flex-col items-center justify-center bg-[#262626] px-[55px] py-[40px] md:hidden`}
+        className={`${isHidden ? hidden : visible} transition-custom fixed right-0 top-0 z-[60] h-full w-full bg-[#14141499]`}
       >
-        <ul className="flex flex-col items-start gap-[20px]">
-          <NavigateMenu />
-        </ul>
-        <div className="absolute bottom-[40px]">
-          <LogOutButton />
-        </div>
-        <button
-          type="button"
-          className="absolute right-[40px] top-[34px] h-[28px] w-[28px]"
-          onClick={() => setIsHidden(!isHidden)}
+        <div
+          ref={menuRef}
+          className={` ${isHidden ? hidden : visible} transition-custom fixed right-0 top-0 z-[70] flex h-full w-[60%] max-w-[300px] flex-col items-center justify-center bg-[#262626] px-[55px] py-[40px] md:hidden`}
         >
-          <IoMdClose />
-        </button>
+          <ul className="flex flex-col items-start gap-[20px]">
+            <NavigateMenu />
+          </ul>
+          <div className="absolute bottom-[40px]">
+            <LogOutButton />
+          </div>
+          <button
+            type="button"
+            className="absolute right-[40px] top-[34px] h-[28px] w-[28px]"
+            onClick={() => setIsHidden(!isHidden)}
+          >
+            <IoMdClose />
+          </button>
+        </div>
       </div>
     </>
   );

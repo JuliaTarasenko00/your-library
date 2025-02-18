@@ -33,12 +33,7 @@ export const Modal: FC<ModalProps> = ({ children, closeModal, isOpen }) => {
   }, [closeModal]);
 
   return createPortal(
-    <div
-      className={`relative z-10 ${isOpen ? 'h-100% w-100% opacity-100' : 'h-0 w-0 opacity-0'} transition duration-[450ms] ease-out`}
-      aria-labelledby="modal-title"
-      role="dialog"
-      aria-modal="true"
-    >
+    <>
       <div
         className={`${isOpen ? 'h-100% w-100% opacity-100' : 'h-0 w-0 opacity-0'} fixed inset-0 transition duration-[450ms] ease-out`}
         aria-hidden="true"
@@ -65,7 +60,7 @@ export const Modal: FC<ModalProps> = ({ children, closeModal, isOpen }) => {
           </div>
         </div>
       </div>
-    </div>,
+    </>,
     modalRoot,
   );
 };
