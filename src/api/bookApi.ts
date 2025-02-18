@@ -34,6 +34,14 @@ export const getMyLibrary = async () => {
   return data;
 };
 
+export const filterMyLibrary = async (type: any) => {
+  const { data } = await $instants.get<BookWithProgress[]>(
+    `${path}/own?status=${type}`,
+  );
+
+  return data;
+};
+
 export const removeBookFromLibrary = async (id: string) => {
   const { data } = await $instants.delete<DeleteBookResponse>(
     `${path}/remove/${id}`,

@@ -124,7 +124,7 @@ export default function ReadingPage() {
               </p>
             )}
           </div>
-          <div className="mg:mt-[40px] mt-[32px] place-items-center lg:mt-[44px]">
+          <div className="mg:mt-[40px] mt-[32px] flex flex-col items-center justify-center lg:mt-[44px]">
             <img
               src={image}
               alt={book.title}

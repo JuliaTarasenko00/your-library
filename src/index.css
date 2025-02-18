@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  touch-action: manipulation;
+}
+
 ::-webkit-scrollbar {
   width: 15px;
 }

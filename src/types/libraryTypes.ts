@@ -4,7 +4,7 @@ export type AddBookToLibrary = {
   totalPages: number;
 };
 
-type ReadingStatus = 'in-progress' | 'unread';
+export type ReadingStatus = 'in-progress' | 'unread' | 'done';
 
 export type ProgressEntry = {
   startPage: number;

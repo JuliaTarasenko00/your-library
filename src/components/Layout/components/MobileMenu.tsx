@@ -1,7 +1,7 @@
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 import { LogOutButton } from './LogOutButton';
 import { NavigateMenu } from './NavigateMenu';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 
 const hidden = 'invisible opacity-0 pointer-events-none';
@@ -9,6 +9,18 @@ const visible = 'visible opacity-[1] pointer-events-auto';
 
 export const MobileMenu = ({ name }: { name: string }) => {
   const [isHidden, setIsHidden] = useState<boolean>(true);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handelCloseMenu = (ev: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(ev.target as Node))
+        setIsHidden(true);
+    };
+
+    document.addEventListener('mousedown', handelCloseMenu);
+
+    return () => document.removeEventListener('mousedown', handelCloseMenu);
+  }, []);
 
   return (
     <>
@@ -25,6 +37,7 @@ export const MobileMenu = ({ name }: { name: string }) => {
         </button>
       </div>
       <div
+        ref={menuRef}
         className={` ${isHidden ? hidden : visible} transition-custom fixed right-0 top-0 z-[60] flex h-full w-[60%] max-w-[300px] flex-col items-center justify-center bg-[#262626] px-[55px] py-[40px] md:hidden`}
       >
         <ul className="flex flex-col items-start gap-[20px]">

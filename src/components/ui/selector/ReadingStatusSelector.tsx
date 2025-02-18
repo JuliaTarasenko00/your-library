@@ -1,16 +1,17 @@
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { FC, useEffect, useRef, useState } from 'react';
+import { OptionType } from '../../../pages/Library/Library';
 
 interface ReadingStatusSelectorProps {
-  options: Array<String>;
-  option: string;
-  setOption: any;
+  options: Array<OptionType>;
+  currentOption: string;
+  handleChangeCurrentOption: (type: string, option: string) => void;
 }
 
 export const ReadingStatusSelector: FC<ReadingStatusSelectorProps> = ({
   options,
-  option,
-  setOption,
+  currentOption,
+  handleChangeCurrentOption,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const selectorRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,7 @@ export const ReadingStatusSelector: FC<ReadingStatusSelectorProps> = ({
         type="button"
         className="flex w-[153px] max-w-[153px] items-center justify-between rounded-[12px] border-[1px] border-[#3E3E3E] p-[12px] md:p-[14px]"
       >
-        {option}{' '}
+        {currentOption}{' '}
         <MdOutlineKeyboardArrowDown
           className={`h-[22px] w-[22px] ${isOpen ? 'rotate-[180deg]' : ''} transition-custom`}
         />
@@ -48,17 +49,16 @@ export const ReadingStatusSelector: FC<ReadingStatusSelectorProps> = ({
           isOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
         } transition-custom`}
       >
-        {options.map((el: any) => (
+        {options.map(({ type, option }) => (
           <li
-            key={el}
-            className={` ${el === option ? 'cursor-default text-[#F9F9F9]' : 'cursor-pointer text-[#686868]'} transition-custom text-[12px] leading-[18px] md:text-[14px]`}
-            onClick={(ev: React.MouseEvent<HTMLElement>) => {
-              const target = ev.target as HTMLElement;
-              setOption(target.textContent ?? '');
+            key={type}
+            className={` ${currentOption === option ? 'cursor-default text-[#F9F9F9]' : 'cursor-pointer text-[#686868]'} transition-custom text-[12px] leading-[18px] md:text-[14px]`}
+            onClick={() => {
+              handleChangeCurrentOption(type, option);
               setIsOpen(false);
             }}
           >
-            {el}
+            {option}
           </li>
         ))}
       </ul>
