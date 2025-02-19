@@ -5,6 +5,8 @@ import { submitButton } from '../../ui/submitButtonStyle';
 import { Book } from '../../../types/bookWithReadingProgress';
 import { EmptyProgress } from './EmptyProgress';
 import { ToggleComponent } from './components/ToggleComponent';
+import { validateReadingPage } from './validateSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface ReadingAsideProps {
   book: Book | null;
@@ -49,6 +51,8 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
     defaultValues: {
       page: page || 0,
     },
+    mode: 'onChange',
+    resolver: yupResolver(validateReadingPage(book?.totalPages as number)),
   });
 
   useEffect(() => {

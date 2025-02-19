@@ -6,6 +6,7 @@ import { Loader } from '../../components/ui/loader/Loader';
 import { Container } from '../../components/ui/Container';
 import { Filters } from '../../components/Aside/Filters/Filters';
 import { Title } from '../../components/ui/Title';
+import { NotFoundBook } from './NotFoundBook';
 
 const styleButtons =
   'flex md:h-[40px] md:w-[40px] w-[32px] h-[32px] items-center justify-center rounded-[30px] border-[1px] border-[#F9F9F933] text-[#F9F9F9] disabled:text-[#F9F9F933]';
@@ -61,26 +62,29 @@ export default function Home() {
     >
       <div className="mb-[20px] flex items-center justify-between">
         <Title>Recommended</Title>
-        <div className="flex items-center justify-end gap-[8px]">
-          <button
-            type="button"
-            onClick={prevPage}
-            disabled={currentPage === 1}
-            className={styleButtons}
-          >
-            <IoIosArrowBack className="h-[20px] w-[20px]" />
-          </button>
-          <button
-            type="button"
-            onClick={nextPage}
-            disabled={data?.totalPages === currentPage}
-            className={styleButtons}
-          >
-            <IoIosArrowForward className="h-[20px] w-[20px]" />
-          </button>
-        </div>
+        {!!data?.results.length && (
+          <div className="flex items-center justify-end gap-[8px]">
+            <button
+              type="button"
+              onClick={prevPage}
+              disabled={currentPage === 1}
+              className={styleButtons}
+            >
+              <IoIosArrowBack className="h-[20px] w-[20px]" />
+            </button>
+            <button
+              type="button"
+              onClick={nextPage}
+              disabled={data?.totalPages === currentPage}
+              className={styleButtons}
+            >
+              <IoIosArrowForward className="h-[20px] w-[20px]" />
+            </button>
+          </div>
+        )}
       </div>
       {isLoading ? <Loader /> : <BooksMarkup data={data?.results} />}
+      {!data?.results.length && <NotFoundBook />}
     </Container>
   );
 }

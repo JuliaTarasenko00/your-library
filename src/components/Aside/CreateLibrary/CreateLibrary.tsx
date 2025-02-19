@@ -9,6 +9,8 @@ import { toast } from 'sonner';
 import { toastErrorStyle, toastSuccessStyle } from '../../ui/toastStyle';
 import { useQueryClient } from '@tanstack/react-query';
 import { submitButton } from '../../ui/submitButtonStyle';
+import { TypeValidateBody, validateBody } from './validateSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const defaultValues = {
   title: '',
@@ -26,14 +28,15 @@ export const CreateLibrary = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm<TypeValidateBody>({
     defaultValues,
     mode: 'onSubmit',
+    resolver: yupResolver(validateBody),
   });
 
-  const submitForm = async (values: typeof defaultValues) => {
+  const submitForm = async (values: TypeValidateBody) => {
     mutate(
-      { ...values, totalPages: Number(values.totalPages) },
+      { ...values },
       {
         onSuccess: async () => {
           await queryClient.invalidateQueries({

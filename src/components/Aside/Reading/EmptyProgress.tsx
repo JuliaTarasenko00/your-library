@@ -10,7 +10,7 @@ export const EmptyProgress = () => {
         Here you will see when and how much you read. To record, click on the
         red button above.
       </p>
-      <div className="flex h-[80px] w-[80px] items-center justify-center place-self-center rounded-[50px] bg-[#262626] md:h-[100px] md:w-[100px]">
+      <div className="mx-auto flex h-[80px] w-[80px] items-center justify-center rounded-[50px] bg-[#262626] md:h-[100px] md:w-[100px]">
         <img
           src={img}
           alt="star"
