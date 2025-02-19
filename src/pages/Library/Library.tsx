@@ -33,6 +33,7 @@ const options: OptionType[] = [
 export default function Library() {
   const queryClient = useQueryClient();
   const { data: libraryData, isLoading } = useGetLibrary();
+  console.log('libraryData: ', libraryData);
   const { mutate: removeBook, isPending: isRemoving } =
     useRemoveBookFromLibrary();
   const { mutate: filterLibrary, isPending: isFiltering } = useFilterLibrary();
@@ -41,6 +42,7 @@ export default function Library() {
     options[options.length - 1].option,
   );
   const [bookList, setBookList] = useState<BookWithProgress[]>([]);
+  console.log('bookList: ', bookList);
 
   useEffect(() => {
     if (libraryData) setBookList(libraryData);

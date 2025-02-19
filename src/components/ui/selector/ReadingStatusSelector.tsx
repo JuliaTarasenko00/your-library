@@ -46,7 +46,9 @@ export const ReadingStatusSelector: FC<ReadingStatusSelectorProps> = ({
       </button>
       <ul
         className={`absolute top-[116%] flex w-full flex-col gap-[7px] overflow-hidden rounded-[12px] bg-[#262626] p-[14px] shadow-lg ${
-          isOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
+          isOpen
+            ? 'max-h-60 max-w-60 opacity-100'
+            : 'pointer-events-none max-h-0 opacity-0'
         } transition-custom`}
       >
         {options.map(({ type, option }) => (

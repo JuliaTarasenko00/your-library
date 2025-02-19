@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { FaArrowRightLong } from 'react-icons/fa6';
-import { useRecommendBooks } from '../../../pages/Home/useRecommendBooks';
 import { routes } from '../../../helpers/path';
 import { Controller, useForm } from 'react-hook-form';
 import { TextInput } from '../../ui/inputs/TextInput';
@@ -11,6 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { submitButton } from '../../ui/submitButtonStyle';
 import { TypeValidateBody, validateBody } from './validateSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useGetBooks } from './useGetBooks';
 
 const defaultValues = {
   title: '',
@@ -21,7 +21,7 @@ const defaultValues = {
 export const CreateLibrary = () => {
   const queryClient = useQueryClient();
 
-  const { data } = useRecommendBooks(2, 3);
+  const { data } = useGetBooks(3, 3);
   const { mutate, isPending } = useAddBookToLibrary();
   const navigate = useNavigate();
   const {

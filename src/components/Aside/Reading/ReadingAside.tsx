@@ -51,7 +51,7 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
     defaultValues: {
       page: page || 0,
     },
-    mode: 'onChange',
+    mode: 'onSubmit',
     resolver: yupResolver(validateReadingPage(book?.totalPages as number)),
   });
 

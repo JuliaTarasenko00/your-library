@@ -3,7 +3,6 @@ import { useFilterBook } from '../../helpers/context/filterByAuthorTile/useFilte
 
 export const NotFoundBook = () => {
   const { value } = useFilterBook();
-  console.log('value: ', value.author);
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-start gap-[20px] lg:justify-center">

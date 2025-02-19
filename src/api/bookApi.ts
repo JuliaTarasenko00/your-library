@@ -22,6 +22,14 @@ export const getRecommendBook = async (
   return data;
 };
 
+export const getRecommendBookByLibrary = async (page = 3, limit = 3) => {
+  const { data } = await $instants.get<recommendBook>(
+    `${path}/recommend?page=${page}&limit=${limit}`,
+  );
+
+  return data;
+};
+
 export const addBookToLibraryById = async (id: string) => {
   const { data } = await $instants.post<BookWithProgress>(`${path}/add/${id}`);
 
