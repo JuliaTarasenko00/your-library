@@ -13,10 +13,12 @@ import { useStartReadingBook } from './request/useStartReadingBook';
 import { useFinishReadingBook } from './request/useFinishReadingBook';
 import img from '../../assets/img/image_not_found.jpg';
 import { useDeleteReadingTime } from './request/useDeleteReadingTime';
+import { NotValidId } from './NotValidId';
 
 export default function ReadingPage() {
   const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
+  const [error, setError] = useState<boolean>(false);
   const { mutate, isPending } = useBookById();
   const { mutate: startReading, isPending: pendingStartReading } =
     useStartReadingBook();
@@ -44,6 +46,9 @@ export default function ReadingPage() {
           setBook(data);
         },
         onError: (error: any) => {
+          if (error?.status === 400) {
+            setError(true);
+          }
           toast.error(error.response.data.message, {
             style: toastErrorStyle,
           });
@@ -107,9 +112,11 @@ export default function ReadingPage() {
           pendingFinishReading={pendingFinishReading}
           isPending={isPending}
           handleDeleteReadingTime={handleDeleteReadingTime}
+          error={error}
         />
       }
     >
+      {error && <NotValidId />}
       {isPending && <Loader />}
       {book && !isPending && (
         <>
@@ -133,7 +140,7 @@ export default function ReadingPage() {
               loading="lazy"
               className="mb-[10px] h-[208px] w-[137px] rounded-[8px] md:h-[256px] md:w-[169px] lg:h-[340px] lg:w-[224px]"
             />
-            <h3 className="md:text[20px] max-w-[170px] text-center text-[14px] font-bold leading-[18px] text-[#F9F9F9] md:max-w-max md:leading-[20px]">
+            <h3 className="max-w-[170px] text-center text-[14px] font-bold leading-[18px] text-[#F9F9F9] md:max-w-max md:text-[20px] md:leading-[20px]">
               {book.title}
             </h3>
             <p className="mb-[20px] mt-[5px] text-[10px] leading-[12px] text-[#686868] md:mb-[16px] md:text-[14px] md:leading-[18px]">

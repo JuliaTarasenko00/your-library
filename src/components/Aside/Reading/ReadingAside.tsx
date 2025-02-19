@@ -16,6 +16,7 @@ interface ReadingAsideProps {
   pendingStartReading: boolean;
   pendingFinishReading: boolean;
   isPending: boolean;
+  error: boolean;
 }
 
 export const ReadingAside: FC<ReadingAsideProps> = ({
@@ -28,6 +29,7 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
   pendingFinishReading,
   handleDeleteReadingTime,
   isPending,
+  error,
 }) => {
   const bookProgress = book?.progress;
   const page =
@@ -91,7 +93,7 @@ export const ReadingAside: FC<ReadingAsideProps> = ({
           {!isActive && (
             <button
               type="button"
-              disabled={pendingStartReading}
+              disabled={pendingStartReading || error}
               onClick={() => handleStartReading(bookId, page as number)}
               className={submitButton}
             >

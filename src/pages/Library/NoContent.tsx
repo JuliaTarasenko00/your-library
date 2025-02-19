@@ -2,7 +2,7 @@ import book from '../../assets/img/bigBook.webp';
 
 export const NoContent = () => {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-[20px]">
+    <div className="flex h-full w-full flex-col items-center justify-start gap-[20px] lg:justify-center">
       <div className="flex h-[100px] w-[100px] items-center justify-center rounded-[65px] bg-[#262626] md:h-[130px] md:w-[130px]">
         <img
           src={book}

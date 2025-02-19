@@ -79,7 +79,7 @@ select {
 
 @layer {
   .container-custom {
-    @apply w-[100%] max-w-[375px] place-self-center px-[20px] md:max-w-[768px] md:px-[32px] lg:max-w-[1280px];
+    @apply mx-auto w-[100%] max-w-[375px] px-[20px] md:max-w-[768px] md:px-[32px] lg:max-w-[1280px];
   }
   .transition-custom {
     @apply transition-all duration-[400ms];
